@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projeto Água Limpa</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body { scroll-behavior: smooth; }
+  </style>
+</head>
+
+<body class="bg-blue-50 text-gray-800">
+
+<!-- NAVBAR -->
+<nav class="fixed w-full bg-white shadow z-50">
+  <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
+    <h1 class="text-xl font-bold text-blue-600">Água Limpa</h1>
+    <div class="space-x-4">
+      <a href="#sobre">Sobre</a>
+      <a href="#tutorial">Tutorial</a>
+      <a href="#saude">Saúde</a>
+      <a href="#avaliacoes">Avaliações</a>
+      <a href="#contato">Contato</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-cyan-400 text-white">
+  <div class="text-center" data-aos="fade-up">
+    <h1 class="text-5xl font-bold mb-4">Água limpa muda vidas</h1>
+    <p class="text-lg mb-6">Um projeto social para levar saúde e qualidade de vida</p>
+    <a href="#sobre" class="bg-white text-blue-600 px-6 py-3 rounded-full hover:scale-110 transition">Saiba mais</a>
+  </div>
+</section>
+
+<!-- CONTADOR -->
+<section class="py-10 text-center bg-white">
+  <h2 class="text-2xl font-bold">Visitantes</h2>
+  <p id="contador" class="text-4xl text-blue-600 font-bold mt-2">0</p>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre" class="py-20 max-w-6xl mx-auto px-4" data-aos="fade-right">
+  <h2 class="text-3xl font-bold mb-6">Sobre o Projeto</h2>
+  <p>Nosso projeto busca conscientizar sobre a importância da água limpa para a saúde.</p>
+</section>
+
+<!-- VIDEO -->
+<section id="tutorial" class="py-20 bg-white px-4" data-aos="zoom-in">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold mb-6">Tutorial</h2>
+    <iframe class="w-full h-[400px] rounded-xl shadow"
+      src="https://www.youtube.com/embed/VIDEO_ID">
+    </iframe>
+  </div>
+</section>
+
+<!-- BENEFÍCIOS -->
+<section id="saude" class="py-20 max-w-6xl mx-auto px-4" data-aos="fade-left">
+  <h2 class="text-3xl font-bold mb-6">Benefícios</h2>
+  <ul class="space-y-4">
+    <li class="bg-white p-4 rounded-xl shadow hover:scale-105">Previne doenças</li>
+    <li class="bg-white p-4 rounded-xl shadow hover:scale-105">Melhora qualidade de vida</li>
+    <li class="bg-white p-4 rounded-xl shadow hover:scale-105">Bem-estar</li>
+  </ul>
+</section>
+
+<!-- AVALIAÇÕES -->
+<section id="avaliacoes" class="py-20 bg-gray-100 px-4">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold mb-6">Avaliações</h2>
+
+    <form id="formAvaliacao" class="space-y-4">
+      <input type="text" id="nome" placeholder="Seu nome" class="w-full p-2 border rounded" required>
+      <textarea id="comentario" placeholder="Seu comentário" class="w-full p-2 border rounded" required></textarea>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded">Enviar</button>
+    </form>
+
+    <div id="listaAvaliacoes" class="mt-6 space-y-4"></div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" class="py-20 bg-blue-600 text-white text-center">
+  <h2 class="text-3xl font-bold mb-4">Contato</h2>
+  <a href="#" class="bg-white text-blue-600 px-6 py-3 rounded-full">Fale conosco</a>
+</section>
+
+<footer class="text-center p-4 bg-gray-900 text-white">
+  © 2026 Projeto Água Limpa
+</footer>
+
+<script>
+AOS.init();
+
+// CONTADOR LOCAL
+let visitas = localStorage.getItem('visitas') || 0;
+visitas++;
+localStorage.setItem('visitas', visitas);
+document.getElementById('contador').innerText = visitas;
+
+// AVALIAÇÕES
+const form = document.getElementById('formAvaliacao');
+const lista = document.getElementById('listaAvaliacoes');
+
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+
+  const nome = document.getElementById('nome').value;
+  const comentario = document.getElementById('comentario').value;
+
+  const div = document.createElement('div');
+  div.className = 'bg-white p-4 rounded shadow';
+  div.innerHTML = `<strong>${nome}</strong><p>${comentario}</p>`;
+
+  lista.prepend(div);
+  form.reset();
+});
+</script>
+
+</body>
+</html>
