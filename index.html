@@ -633,6 +633,68 @@
       .hero__metrics { grid-template-columns: 1fr; }
       .nav { font-size: 0.8rem; gap: 0.5rem 0.8rem; }
     }
+
+    /* Back to top */
+    #back-to-top {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+      color: white;
+      border: none;
+      box-shadow: 0 8px 24px rgba(14,165,233,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      pointer-events: none;
+    }
+    #back-to-top.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    #back-to-top:hover {
+      box-shadow: 0 14px 32px rgba(14,165,233,0.45);
+      transform: translateY(-2px);
+    }
+    #back-to-top svg { display: block; }
+
+    /* Stars */
+    .star-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .star-btn {
+      background: none;
+      border: none;
+      padding: 2px;
+      font-size: 1.6rem;
+      line-height: 1;
+      color: #cbd5e1;
+      cursor: none;
+      transition: color 0.15s ease, transform 0.15s ease;
+    }
+    .star-btn:hover,
+    .star-btn.active { color: #f59e0b; }
+    .star-btn.active { transform: scale(1.15); }
+    .star-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text-2);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    /* Review stars display */
+    .review-stars { color: #f59e0b; font-size: 0.9rem; margin-bottom: 4px; }
   </style>
 </head>
 <body>
@@ -901,6 +963,16 @@
                 <span>Seu nome</span>
                 <input type="text" id="nome" class="input" placeholder="Digite seu nome" required>
               </label>
+              <div class="field">
+                <span class="star-label">Sua nota</span>
+                <div class="star-row" id="starRow" role="group" aria-label="Nota de 1 a 5 estrelas">
+                  <button type="button" class="star-btn" data-val="1" aria-label="1 estrela">★</button>
+                  <button type="button" class="star-btn" data-val="2" aria-label="2 estrelas">★</button>
+                  <button type="button" class="star-btn" data-val="3" aria-label="3 estrelas">★</button>
+                  <button type="button" class="star-btn" data-val="4" aria-label="4 estrelas">★</button>
+                  <button type="button" class="star-btn" data-val="5" aria-label="5 estrelas">★</button>
+                </div>
+              </div>
               <label class="field">
                 <span>Seu comentário</span>
                 <textarea id="comentario" class="textarea" placeholder="Escreva sua opinião" required></textarea>
@@ -934,6 +1006,12 @@
       </div>
     </section>
   </main>
+
+  <button id="back-to-top" aria-label="Voltar ao topo">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <path d="M9 14V4M4 9l5-5 5 5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
 
   <footer class="site-footer">
     <div class="container footer-inner">
@@ -1056,7 +1134,8 @@
       waterRect.setAttribute('y', y);
       waterRect.setAttribute('height', fillPx);
 
-      // Animated wave on top surface
+      // Animated wave on top surface — hide when empty
+      if (fillRatio < 0.005) { wavePath.setAttribute('d', ''); return; }
       waveT += 0.03;
       const amp = 6, pts = 12;
       let d = `M 50 ${y}`;
@@ -1089,24 +1168,44 @@
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    // Wave always animates (separate loop)
+    // Wave always animates (separate loop) — only if elements exist
     function waveLoop() {
-      if (rafId === 0) updateWater(currentFill);
+      if (waterRect && wavePath) {
+        if (rafId === 0) updateWater(currentFill);
+      }
       requestAnimationFrame(waveLoop);
     }
-    requestAnimationFrame(waveLoop);
+    if (waterRect && wavePath) requestAnimationFrame(waveLoop);
 
-    // ─── Counter ─────────────────────────────────────────────────
+    // ─── Counter (shared, 1 per device via localStorage flag) ──
     const contadorEl = document.getElementById('contador');
-    (function() {
-      const KEY = 'contadorDispositivosAguaLimpa';
-      const REG = 'dispositivoRegistradoAguaLimpa';
-      let v = Number(localStorage.getItem(KEY)) || 0;
-      if (!localStorage.getItem(REG)) {
-        v++; localStorage.setItem(KEY, v); localStorage.setItem(REG, 'true');
+    const VISIT_KEY = 'agua-limpa-visitas-v1';
+    const VISIT_REG = 'agua-limpa-dispositivo-registrado';
+
+    async function initCounter() {
+      try {
+        // Read current shared count
+        let count = 0;
+        try {
+          const res = await window.storage.get(VISIT_KEY, true);
+          count = res ? (parseInt(res.value) || 0) : 0;
+        } catch(_) {}
+
+        // Only increment if this device hasn't been counted before
+        const jaRegistrado = localStorage.getItem(VISIT_REG);
+        if (!jaRegistrado) {
+          count++;
+          localStorage.setItem(VISIT_REG, 'true');
+          try { await window.storage.set(VISIT_KEY, String(count), true); } catch(_) {}
+        }
+
+        contadorEl.textContent = count;
+      } catch(e) {
+        // Fallback: just show 1
+        contadorEl.textContent = '1';
       }
-      contadorEl.textContent = v;
-    })();
+    }
+    initCounter();
 
     // ─── Animated Stats ──────────────────────────────────────────
     function animateCount(el, target, suffix, duration) {
@@ -1151,7 +1250,25 @@
 
     statEls.forEach(el => statsObserver.observe(el));
 
-    // ─── Reviews ─────────────────────────────────────────────────
+    // ─── Stars ───────────────────────────────────────────────────
+    const starBtns = document.querySelectorAll('.star-btn');
+    let selectedStars = 0;
+    starBtns.forEach(btn => {
+      btn.addEventListener('mouseenter', () => {
+        const v = +btn.dataset.val;
+        starBtns.forEach(b => b.classList.toggle('active', +b.dataset.val <= v));
+      });
+      btn.addEventListener('mouseleave', () => {
+        starBtns.forEach(b => b.classList.toggle('active', +b.dataset.val <= selectedStars));
+      });
+      btn.addEventListener('click', () => {
+        selectedStars = +btn.dataset.val;
+        starBtns.forEach(b => b.classList.toggle('active', +b.dataset.val <= selectedStars));
+      });
+    });
+
+    // ─── Reviews (shared via Anthropic storage API) ──────────────
+    const STORAGE_KEY = 'agua-limpa-avaliacoes-v1';
     const form = document.getElementById('formAvaliacao');
     const lista = document.getElementById('listaAvaliacoes');
     const msg = document.getElementById('mensagemFormulario');
@@ -1161,8 +1278,11 @@
       msg.className = 'feedback is-visible ' + (type === 'erro' ? 'is-error' : 'is-success');
     }
 
-    function loadReviews() {
-      const dados = JSON.parse(localStorage.getItem('avaliacoesAguaLimpa')) || [];
+    function starsHtml(n) {
+      return '★'.repeat(n) + '☆'.repeat(5 - n);
+    }
+
+    function renderReviews(dados) {
       lista.innerHTML = '';
       if (!dados.length) {
         const empty = document.createElement('div');
@@ -1173,27 +1293,64 @@
       dados.forEach(item => {
         const art = document.createElement('article');
         art.className = 'review';
+        const stars = document.createElement('div');
+        stars.className = 'review-stars';
+        stars.textContent = starsHtml(item.estrelas || 5);
         const n = document.createElement('strong'); n.textContent = item.nome;
         const p = document.createElement('p'); p.textContent = item.comentario;
-        art.appendChild(n); art.appendChild(p);
+        art.appendChild(stars); art.appendChild(n); art.appendChild(p);
         lista.appendChild(art);
       });
     }
 
-    form.addEventListener('submit', e => {
+    async function loadReviews() {
+      lista.innerHTML = '<div class="review review--empty">Carregando avaliações…</div>';
+      try {
+        const result = await window.storage.get(STORAGE_KEY, true);
+        const dados = result ? JSON.parse(result.value) : [];
+        renderReviews(dados);
+      } catch(e) {
+        renderReviews([]);
+      }
+    }
+
+    form.addEventListener('submit', async e => {
       e.preventDefault();
       const nome = document.getElementById('nome').value.trim();
       const comentario = document.getElementById('comentario').value.trim();
       if (!nome || !comentario) { showMsg('Preencha seu nome e comentário antes de enviar.', 'erro'); return; }
-      const dados = JSON.parse(localStorage.getItem('avaliacoesAguaLimpa')) || [];
-      dados.unshift({ nome, comentario });
-      localStorage.setItem('avaliacoesAguaLimpa', JSON.stringify(dados));
-      form.reset();
-      loadReviews();
-      showMsg('Avaliação enviada com sucesso.', 'sucesso');
+      if (!selectedStars) { showMsg('Selecione uma nota de 1 a 5 estrelas.', 'erro'); return; }
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando…';
+      try {
+        let dados = [];
+        try {
+          const result = await window.storage.get(STORAGE_KEY, true);
+          dados = result ? JSON.parse(result.value) : [];
+        } catch(_) {}
+        dados.unshift({ nome, comentario, estrelas: selectedStars, data: new Date().toLocaleDateString('pt-BR') });
+        await window.storage.set(STORAGE_KEY, JSON.stringify(dados), true);
+        form.reset();
+        selectedStars = 0;
+        starBtns.forEach(b => b.classList.remove('active'));
+        renderReviews(dados);
+        showMsg('Avaliação enviada com sucesso! Obrigado.', 'sucesso');
+      } catch(err) {
+        showMsg('Erro ao salvar. Tente novamente.', 'erro');
+      }
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar avaliação';
     });
 
     loadReviews();
+
+    // ─── Back to top ─────────────────────────────────────────────
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('is-visible', window.scrollY > 400);
+    }, { passive: true });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   </script>
 </body>
 </html>
