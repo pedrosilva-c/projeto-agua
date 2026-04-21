@@ -1,201 +1,437 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Projeto Água Limpa</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projeto Agua Limpa</title>
+  <title>Projeto Água Limpa</title>
+  <meta
+    name="description"
+    content="Projeto social sobre a importancia da agua limpa para a saude, a prevencao de doencas e a qualidade de vida."
+    content="Projeto social sobre a importância da água limpa para a saúde, a prevenção de doenças e a qualidade de vida."
+  >
 
-<style>
-:root{
-  --fill: 0%;
-}
+  <script src="https://cdn.tailwindcss.com"></script>
+      width: 55%;
+      height: 260%;
+      transform: rotate(18deg);
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shine 7s linear infinite;
+    }
 
-/* RESET */
-body{
-  margin:0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(#dff6ff, #ffffff);
-}
+    .logo-progress {
+      --fill-level: 0%;
+    }
 
-/* NAV */
-header{
-  position: fixed;
-  top:0;
-  width:100%;
-  background:#fff;
-  padding:15px 30px;
-  display:flex;
-  justify-content:space-between;
-  box-shadow:0 2px 10px rgba(0,0,0,0.05);
-  z-index:10;
-}
+    .logo-water {
+      height: var(--fill-level);
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.45), transparent 22%),
+        linear-gradient(180deg, rgba(125, 211, 252, 0.85) 0%, rgba(14, 165, 233, 0.88) 45%, rgba(8, 47, 73, 0.92) 100%);
+      transition: height 0.18s linear;
+    }
 
-/* HERO */
-.hero{
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:100px 60px 0;
-}
+    .logo-wave {
+      position: absolute;
+      top: -16px;
+      left: -6%;
+      width: 112%;
+      height: 28px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.38);
+      filter: blur(1px);
+      animation: wave 4.5s ease-in-out infinite;
+    }
 
-.hero-text{
-  max-width:500px;
-}
+    .logo-water::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 45%);
+    }
 
-.hero-text h1{
-  font-size:56px;
-  margin:0;
-}
+    .logo-watermark {
+      mix-blend-mode: multiply;
+      opacity: 0.85;
+      filter: saturate(1.08);
+    }
 
-.hero-text p{
-  color:#555;
-}
+    @keyframes shine {
+      from {
+        transform: translateX(-30%) rotate(18deg);
+      }
+    }
 
-/* MASCOTE */
-.mascot{
-  position:relative;
-  width:300px;
-}
+    @keyframes wave {
+      0%, 100% {
+        transform: translateX(-2%);
+      }
+      50% {
+        transform: translateX(2%);
+      }
+    }
 
-/* camada da água */
-.water{
-  position:absolute;
-  bottom:0;
-  width:100%;
-  height:var(--fill);
-  background:linear-gradient(to top,#0099ff,#66ccff);
-  opacity:0.8;
+    .float-soft {
+      animation: float-soft 5.5s ease-in-out infinite;
+    }
 
-  /* máscara da imagem */
-  -webkit-mask: url("mascote-vazio.png") center/contain no-repeat;
-  mask: url("mascote-vazio.png") center/contain no-repeat;
+    .hero-grid {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 34px 34px;
+    }
+  </style>
+<body class="text-slate-800 selection:bg-cyan-200 selection:text-slate-900">
+  <nav class="fixed inset-x-0 top-0 z-50">
+    <div class="mx-auto mt-4 flex max-w-6xl items-center justify-between rounded-full border border-white/40 px-4 py-3 shadow-lg glass sm:px-6">
+      <a href="#inicio" class="text-lg font-black tracking-wide text-cyan-700">Agua Limpa</a>
+      <a href="#inicio" class="text-lg font-black tracking-wide text-cyan-700">Água Limpa</a>
 
-  transition: height 0.2s linear;
-}
-
-/* onda */
-.wave{
-  position:absolute;
-  top:-10px;
-  width:200%;
-  height:20px;
-  background:rgba(255,255,255,0.6);
-  border-radius:50%;
-  animation: wave 4s infinite linear;
-}
-
-@keyframes wave{
-  0%{transform:translateX(0);}
-  100%{transform:translateX(-50%);}
-}
-
-/* imagem */
-.mascot img{
-  width:100%;
-  position:relative;
-  z-index:2;
-}
-
-/* SCROLL INDICADOR */
-.scroll-box{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#fff;
-  padding:10px 15px;
-  border-radius:10px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.1);
-}
-
-.bar{
-  height:6px;
-  width:80px;
-  background:#eee;
-  border-radius:10px;
-  overflow:hidden;
-  margin-top:5px;
-}
-
-.bar-fill{
-  height:100%;
-  width:var(--fill);
-  background:#0099ff;
-}
-
-/* SECTIONS */
-section{
-  height:100vh;
-  padding:60px;
-}
-
-</style>
-</head>
-
-<body>
-
-<header>
-  <strong>Água Limpa</strong>
-  <nav>Sobre • Benefícios • Contato</nav>
-</header>
-
-<div class="hero">
-
-  <div class="hero-text">
-    <h1>Água limpa transforma vidas</h1>
-    <p>Um projeto de conscientização sobre saúde e qualidade de vida.</p>
-  </div>
-
-  <div class="mascot">
-
-    <div class="water" id="water">
-      <div class="wave"></div>
+      <div class="hidden items-center gap-5 text-sm font-medium text-slate-700 md:flex">
+        <a href="#sobre" class="transition hover:text-cyan-600">Sobre</a>
+        <a href="#tutorial" class="transition hover:text-cyan-600">Tutorial</a>
+        <a href="#saude" class="transition hover:text-cyan-600">Beneficios</a>
+        <a href="#avaliacoes" class="transition hover:text-cyan-600">Avaliacoes</a>
+        <a href="#saude" class="transition hover:text-cyan-600">Benefícios</a>
+        <a href="#avaliacoes" class="transition hover:text-cyan-600">Avaliações</a>
+        <a href="#contato" class="transition hover:text-cyan-600">Contato</a>
+      </div>
     </div>
+            Projeto social e educacional
+          </span>
+          <h1 class="max-w-xl text-4xl font-black leading-tight sm:text-5xl md:text-6xl">
+            Agua limpa muda vidas todos os dias
+            Água limpa muda vidas todos os dias
+          </h1>
+          <p class="mt-5 max-w-xl text-base leading-7 text-blue-50 sm:text-lg">
+            Um projeto de conscientizacao sobre saude, prevencao de doencas e qualidade de vida por meio do acesso a agua limpa.
+            Um projeto de conscientização sobre saúde, prevenção de doenças e qualidade de vida por meio do acesso à água limpa.
+          </p>
+          <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+            <a
+          <div class="rounded-[2rem] border border-white/20 bg-white/10 p-5 shadow-2xl backdrop-blur-md">
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div class="rounded-3xl bg-white/90 p-5 text-slate-800 shadow-lg">
+                <p class="text-sm font-semibold text-cyan-700">Impacto</p>
+                <p class="mt-3 text-3xl font-black" id="contador">0</p>
+                <p class="mt-2 text-sm text-slate-600">visitas registradas neste navegador</p>
+                <p class="text-sm font-semibold text-cyan-700">Visitantes</p>
+                <p class="mt-3 text-3xl font-black" id="contador">1</p>
+                <p class="mt-2 text-sm text-slate-600" id="contadorDescricao">
+                  contagem estimada por dispositivo neste navegador
+                </p>
+              </div>
+              <div class="rounded-3xl bg-cyan-300/20 p-5 shadow-lg">
+                <p class="text-sm font-semibold text-cyan-100">Foco</p>
+                <p class="mt-3 text-2xl font-bold">Saude, educacao e prevencao</p>
+                <p class="mt-2 text-sm text-cyan-50">Informacao acessivel para a comunidade.</p>
+                <p class="mt-3 text-2xl font-bold">Saúde, educação e prevenção</p>
+                <p class="mt-2 text-sm text-cyan-50">Informação acessível para a comunidade.</p>
+              </div>
+            </div>
 
-    <img src="mascote-vazio.png">
+            <div class="mt-4 rounded-3xl bg-slate-950/20 p-5">
+              <p class="text-sm font-semibold text-cyan-100">Mensagem principal</p>
+              <p class="mt-3 text-lg leading-8 text-white/90">
+                Pequenas acoes de conscientizacao podem gerar grandes resultados na qualidade de vida de muitas pessoas.
+                Pequenas ações de conscientização podem gerar grandes resultados na qualidade de vida de muitas pessoas.
+              </p>
+            </div>
+          </div>
+      <div class="mx-auto max-w-6xl">
+        <div class="grid gap-4 sm:grid-cols-3">
+          <div class="rounded-3xl border border-cyan-100 bg-white/90 p-6 shadow-sm" data-aos="fade-up" data-aos-delay="0">
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-600">Conscientizacao</p>
+            <h2 class="mt-2 text-xl font-bold">Informacao clara</h2>
+            <p class="mt-3 text-sm leading-6 text-slate-600">Conteudo objetivo para mostrar a importancia da agua limpa no dia a dia.</p>
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-600">Conscientização</p>
+            <h2 class="mt-2 text-xl font-bold">Informação clara</h2>
+            <p class="mt-3 text-sm leading-6 text-slate-600">Conteúdo objetivo para mostrar a importância da água limpa no dia a dia.</p>
+          </div>
+          <div class="rounded-3xl border border-cyan-100 bg-white/90 p-6 shadow-sm" data-aos="fade-up" data-aos-delay="100">
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-600">Prevencao</p>
+            <h2 class="mt-2 text-xl font-bold">Mais saude</h2>
+            <p class="mt-3 text-sm leading-6 text-slate-600">Acesso a agua segura ajuda a evitar contaminacoes e doencas.</p>
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-600">Prevenção</p>
+            <h2 class="mt-2 text-xl font-bold">Mais saúde</h2>
+            <p class="mt-3 text-sm leading-6 text-slate-600">O acesso à água segura ajuda a evitar contaminações e doenças.</p>
+          </div>
+          <div class="rounded-3xl border border-cyan-100 bg-white/90 p-6 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-600">Qualidade de vida</p>
+    </section>
 
-  </div>
+    <section id="sobre" class="px-4 py-20">
+      <div class="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+      <div class="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1fr_1fr] md:items-center">
+        <div data-aos="fade-right" data-aos-duration="850">
+          <p class="text-sm font-bold uppercase tracking-[0.25em] text-cyan-600">Sobre o projeto</p>
+          <h2 class="mt-4 text-3xl font-black text-slate-900 sm:text-4xl">Uma iniciativa voltada para conscientizacao e cuidado coletivo</h2>
+          <h2 class="mt-4 text-3xl font-black text-slate-900 sm:text-4xl">Uma iniciativa voltada para conscientização e cuidado coletivo</h2>
+          <p class="mt-5 text-base leading-8 text-slate-600">
+            O Projeto Agua Limpa busca destacar como a agua potavel influencia diretamente a saude, a higiene e a qualidade de vida.
+            A proposta e compartilhar conhecimento de forma simples, visual e acolhedora.
+            O Projeto Água Limpa busca destacar como a água potável influencia diretamente a saúde, a higiene e a qualidade de vida.
+            A proposta é compartilhar conhecimento de forma simples, visual e acolhedora.
+          </p>
+          <p class="mt-4 text-base leading-8 text-slate-600">
+            Esta pagina foi pensada para apresentar o tema com uma navegacao leve, incentivando a reflexao e o engajamento com a causa.
+            Esta página foi pensada para apresentar o tema com navegação leve, incentivando a reflexão e o engajamento com a causa.
+          </p>
+        </div>
 
-</div>
+          <div class="rounded-3xl bg-gradient-to-br from-cyan-600 to-sky-700 p-6 text-white shadow-xl">
+            <h3 class="text-xl font-bold">Por que isso importa?</h3>
+            <p class="mt-3 leading-7 text-cyan-50">
+              Agua limpa reduz riscos a saude, melhora a rotina das familias e fortalece o desenvolvimento da comunidade.
+              A água limpa reduz riscos à saúde, melhora a rotina das famílias e fortalece o desenvolvimento da comunidade.
+            </p>
+          </div>
+          <div class="rounded-3xl border border-cyan-100 bg-white p-6 shadow-sm">
+            <h3 class="text-xl font-bold text-slate-900">Objetivo</h3>
+            <p class="mt-3 leading-7 text-slate-600">
+              Mostrar que o acesso a agua de qualidade e um direito essencial e um fator decisivo para uma vida mais saudavel.
+              Mostrar que o acesso à água de qualidade é um direito essencial e um fator decisivo para uma vida mais saudável.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<section style="background:#f1f5f9;">Conteúdo</section>
-<section>Mais conteúdo</section>
-<section style="background:#f1f5f9;">Final</section>
+    <section class="px-4 pb-6">
+      <div class="mx-auto max-w-5xl" data-aos="zoom-in-up" data-aos-duration="850">
+        <div class="rounded-[2rem] border border-cyan-100 bg-white/90 p-6 shadow-xl sm:p-8">
+          <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p class="text-sm font-bold uppercase tracking-[0.25em] text-cyan-600">Identidade visual</p>
+              <h2 class="mt-3 text-3xl font-black text-slate-900 sm:text-4xl">Sua logo enche de água conforme a página desce</h2>
+            </div>
+            <p class="max-w-xl text-sm leading-6 text-slate-500">
+              O preenchimento vai subindo com o scroll e chega ao nível máximo quando a pessoa alcança o final do site.
+            </p>
+          </div>
 
-<div class="scroll-box">
-  <div id="percent">0%</div>
-  <div class="bar">
-    <div class="bar-fill"></div>
-  </div>
-</div>
+          <div class="logo-progress mx-auto max-w-2xl">
+            <div class="relative overflow-hidden rounded-[2rem] border border-cyan-100 bg-slate-50 shadow-inner">
+              <img
+                src="./logo-agua-limpa.png"
+                alt="Logo do projeto Água Limpa Vida Sustentável"
+                class="relative z-10 w-full object-contain"
+              >
 
-<script>
-const root = document.documentElement;
-const percent = document.getElementById("percent");
+              <div class="pointer-events-none absolute inset-x-0 bottom-0 z-20 overflow-hidden logo-water">
+                <div class="logo-wave"></div>
+                <img
+                  src="./logo-agua-limpa.png"
+                  alt=""
+                  aria-hidden="true"
+                  class="logo-watermark absolute bottom-0 left-0 w-full object-contain"
+                >
+              </div>
+            </div>
+          </div>
 
-let ticking = false;
+          <div class="mt-5 flex flex-col items-center justify-between gap-3 rounded-3xl bg-cyan-50 px-5 py-4 text-center text-cyan-900 sm:flex-row sm:text-left">
+            <p class="text-sm leading-6">
+              Nível de água da logo baseado no progresso da rolagem da página.
+            </p>
+            <p class="text-lg font-black" id="scrollPercentual">0%</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-function getScroll(){
-  const max = document.body.scrollHeight - window.innerHeight;
-  return max > 0 ? window.scrollY / max : 0;
-}
+    <section id="tutorial" class="bg-white/80 px-4 py-20">
+      <div class="mx-auto max-w-6xl" data-aos="zoom-in-up" data-aos-duration="850">
+        <div class="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-sm font-bold uppercase tracking-[0.25em] text-cyan-600">Tutorial</p>
+            <h2 class="mt-3 text-3xl font-black text-slate-900 sm:text-4xl">Espaco reservado para o seu video</h2>
+            <h2 class="mt-3 text-3xl font-black text-slate-900 sm:text-4xl">Espaço reservado para o seu vídeo</h2>
+          </div>
+          <p class="max-w-xl text-sm leading-6 text-slate-500">
+            Enquanto o video ainda nao foi definido, deixei um bloco elegante com aviso para voce trocar depois sem quebrar o layout.
+            Enquanto o vídeo ainda não foi definido, deixei um bloco elegante com aviso para você trocar depois sem quebrar o layout.
+          </p>
+        </div>
 
-function update(){
-  const p = Math.round(getScroll() * 100);
+            <iframe
+              class="h-full w-full"
+              src=""
+              title="Espaco reservado para video"
+              title="Espaço reservado para vídeo"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+        </div>
 
-  root.style.setProperty("--fill", p + "%");
-  percent.textContent = p + "%";
+        <div class="mt-5 rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-800">
+          Quando receber o link do video, basta trocar o atributo <code>src</code> do <code>iframe</code> em
+          Quando receber o link do vídeo, basta trocar o atributo <code>src</code> do <code>iframe</code> para
+          <code>https://www.youtube.com/embed/SEU_VIDEO</code>.
+        </div>
+      </div>
+    <section id="saude" class="px-4 py-20">
+      <div class="mx-auto max-w-6xl">
+        <div class="mb-10" data-aos="fade-up" data-aos-duration="800">
+          <p class="text-sm font-bold uppercase tracking-[0.25em] text-cyan-600">Beneficios</p>
+          <h2 class="mt-3 text-3xl font-black text-slate-900 sm:text-4xl">Como a agua limpa melhora a saude</h2>
+          <p class="text-sm font-bold uppercase tracking-[0.25em] text-cyan-600">Benefícios</p>
+          <h2 class="mt-3 text-3xl font-black text-slate-900 sm:text-4xl">Como a água limpa melhora a saúde</h2>
+        </div>
 
-  ticking = false;
-}
+        <div class="grid gap-5 md:grid-cols-3">
+          <article class="rounded-3xl border border-cyan-100 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="0">
+            <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-100 text-2xl text-cyan-700">1</div>
+            <h3 class="text-xl font-bold text-slate-900">Previne doencas</h3>
+            <p class="mt-3 leading-7 text-slate-600">Reduz o risco de contaminacoes e problemas causados por agua impropria para consumo.</p>
+            <h3 class="text-xl font-bold text-slate-900">Previne doenças</h3>
+            <p class="mt-3 leading-7 text-slate-600">Reduz o risco de contaminações e problemas causados por água imprópria para consumo.</p>
+          </article>
+          <article class="rounded-3xl border border-cyan-100 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="100">
+            <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-100 text-2xl text-cyan-700">2</div>
+            <h3 class="text-xl font-bold text-slate-900">Melhora a qualidade de vida</h3>
+            <p class="mt-3 leading-7 text-slate-600">Contribui para higiene adequada, bem-estar e mais seguranca na rotina das familias.</p>
+            <p class="mt-3 leading-7 text-slate-600">Contribui para higiene adequada, bem-estar e mais segurança na rotina das famílias.</p>
+          </article>
+          <article class="rounded-3xl border border-cyan-100 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="200">
+            <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-100 text-2xl text-cyan-700">3</div>
+            <h3 class="text-xl font-bold text-slate-900">Promove bem-estar</h3>
+            <p class="mt-3 leading-7 text-slate-600">Um recurso essencial que apoia o desenvolvimento social e a saude coletiva.</p>
+            <p class="mt-3 leading-7 text-slate-600">Um recurso essencial que apoia o desenvolvimento social e a saúde coletiva.</p>
+          </article>
+        </div>
+      </div>
+    <section id="avaliacoes" class="bg-slate-100/80 px-4 py-20">
+      <div class="mx-auto max-w-4xl">
+        <div class="mb-8" data-aos="fade-up" data-aos-duration="800">
+          <p class="text-sm font-bold uppercase tracking-[0.25em] text-cyan-600">Avaliacoes</p>
+          <h2 class="mt-3 text-3xl font-black text-slate-900 sm:text-4xl">Comentarios de visitantes</h2>
+          <p class="mt-3 text-slate-600">Os comentarios ficam salvos no navegador para nao sumirem quando a pagina for atualizada.</p>
+          <p class="text-sm font-bold uppercase tracking-[0.25em] text-cyan-600">Avaliações</p>
+          <h2 class="mt-3 text-3xl font-black text-slate-900 sm:text-4xl">Comentários de visitantes</h2>
+          <p class="mt-3 text-slate-600">Os comentários ficam salvos no navegador para não sumirem quando a página for atualizada.</p>
+        </div>
 
-window.addEventListener("scroll", () => {
-  if(!ticking){
-    requestAnimationFrame(update);
-    ticking = true;
-  }
-});
-</script>
+        <div class="grid gap-6 md:grid-cols-[0.95fr_1.05fr]">
+              required
+            >
 
+            <label for="comentario" class="mb-2 mt-4 block text-sm font-semibold text-slate-700">Seu comentario</label>
+            <label for="comentario" class="mb-2 mt-4 block text-sm font-semibold text-slate-700">Seu comentário</label>
+            <textarea
+              id="comentario"
+              rows="5"
+              placeholder="Escreva sua opiniao"
+              placeholder="Escreva sua opinião"
+              class="w-full rounded-2xl border border-slate-200 p-3 outline-none transition focus:border-cyan-500 focus:ring-4 focus:ring-cyan-100"
+              required
+            ></textarea>
+            <p id="mensagemFormulario" class="mt-3 hidden rounded-2xl px-4 py-3 text-sm"></p>
+
+            <button class="mt-5 w-full rounded-full bg-cyan-600 px-5 py-3 font-semibold text-white transition duration-300 hover:-translate-y-1 hover:bg-cyan-700">
+              Enviar avaliacao
+              Enviar avaliação
+            </button>
+          </form>
+
+        <p class="text-sm font-bold uppercase tracking-[0.3em] text-cyan-100">Contato</p>
+        <h2 class="mt-4 text-3xl font-black sm:text-4xl">Fale conosco</h2>
+        <p class="mx-auto mt-4 max-w-2xl text-base leading-7 text-blue-50">
+          Para mais informacoes sobre o projeto, entre em contato pelo e-mail abaixo.
+          Para mais informações sobre o projeto, entre em contato pelo e-mail abaixo.
+        </p>
+        <a
+          href="mailto:pedro.pereira1@aedb.br"
+  </main>
+
+  <footer class="border-t border-white/40 bg-slate-950 px-4 py-5 text-center text-sm text-slate-300">
+    © 2026 Projeto Agua Limpa. Todos os direitos reservados.
+    © 2026 Projeto Água Limpa. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    });
+
+    const contador = document.getElementById("contador");
+    const contadorDescricao = document.getElementById("contadorDescricao");
+    const form = document.getElementById("formAvaliacao");
+    const lista = document.getElementById("listaAvaliacoes");
+    const mensagemFormulario = document.getElementById("mensagemFormulario");
+    const logoProgress = document.querySelector(".logo-progress");
+    const scrollPercentual = document.getElementById("scrollPercentual");
+
+    function configurarContagemDeVisitante() {
+      const chaveContador = "contadorDispositivosAguaLimpa";
+      const chavePrimeiraVisita = "dispositivoRegistradoAguaLimpa";
+
+      let visitas = Number(localStorage.getItem(chaveContador)) || 0;
+      const dispositivoJaRegistrado = localStorage.getItem(chavePrimeiraVisita) === "true";
+
+      if (!dispositivoJaRegistrado) {
+        visitas += 1;
+        localStorage.setItem(chaveContador, String(visitas));
+        localStorage.setItem(chavePrimeiraVisita, "true");
+        contadorDescricao.textContent = "primeiro acesso registrado neste navegador";
+      } else {
+        contadorDescricao.textContent = "este navegador já foi contabilizado";
+      }
+
+    let visitas = Number(localStorage.getItem("visitas")) || 0;
+    visitas += 1;
+    localStorage.setItem("visitas", String(visitas));
+    contador.textContent = visitas;
+      contador.textContent = visitas;
+    }
+
+    function atualizarPreenchimentoDaLogo() {
+      const alturaRolavel = document.documentElement.scrollHeight - window.innerHeight;
+      const progresso = alturaRolavel > 0 ? Math.min(window.scrollY / alturaRolavel, 1) : 0;
+      const percentual = Math.round(progresso * 100);
+
+      logoProgress.style.setProperty("--fill-level", percentual + "%");
+      scrollPercentual.textContent = percentual + "%";
+    }
+
+    function carregarAvaliacoes() {
+      const avaliacoesSalvas = JSON.parse(localStorage.getItem("avaliacoes")) || [];
+      lista.innerHTML = "";
+      if (avaliacoesSalvas.length === 0) {
+        const aviso = document.createElement("div");
+        aviso.className = "rounded-3xl border border-dashed border-slate-300 bg-white/70 p-6 text-slate-500";
+        aviso.textContent = "Ainda nao ha avaliacoes. Seja a primeira pessoa a comentar.";
+        aviso.textContent = "Ainda não há avaliações. Seja a primeira pessoa a comentar.";
+        lista.appendChild(aviso);
+        return;
+      }
+      const comentario = comentarioInput.value.trim();
+
+      if (!nome || !comentario) {
+        mostrarMensagem("Preencha seu nome e comentario antes de enviar.", "erro");
+        mostrarMensagem("Preencha seu nome e comentário antes de enviar.", "erro");
+        return;
+      }
+
+      localStorage.setItem("avaliacoes", JSON.stringify(avaliacoesSalvas));
+
+      carregarAvaliacoes();
+      mostrarMensagem("Avaliacao enviada com sucesso.", "sucesso");
+      mostrarMensagem("Avaliação enviada com sucesso.", "sucesso");
+      form.reset();
+    });
+
+    window.addEventListener("scroll", atualizarPreenchimentoDaLogo, { passive: true });
+    window.addEventListener("resize", atualizarPreenchimentoDaLogo);
+
+    configurarContagemDeVisitante();
+    carregarAvaliacoes();
+    atualizarPreenchimentoDaLogo();
+  </script>
 </body>
 </html>
