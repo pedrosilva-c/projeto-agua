@@ -8,31 +8,29 @@
     name="description"
     content="Projeto social sobre a importância da água limpa para a saúde, a prevenção de doenças e a qualidade de vida."
   >
-
   <style>
     :root {
-      --bg-top: #e6fbff;
-      --bg-bottom: #f8fbff;
-      --cyan-100: #d8f4ff;
-      --cyan-200: #b8ecff;
-      --cyan-500: #1ba7d8;
-      --cyan-600: #0f8bbc;
-      --cyan-700: #0b6f99;
-      --blue-900: #093f5e;
-      --slate-50: #f8fafc;
-      --slate-100: #f1f5f9;
-      --slate-200: #e2e8f0;
-      --slate-400: #94a3b8;
-      --slate-600: #475569;
-      --slate-700: #334155;
-      --slate-900: #0f172a;
-      --white: #ffffff;
-      --shadow-soft: 0 18px 50px rgba(15, 23, 42, 0.12);
-      --shadow-card: 0 12px 30px rgba(15, 23, 42, 0.08);
-      --radius-xl: 28px;
-      --radius-lg: 20px;
-      --container: 1120px;
       --fill-level: 0%;
+      --bg-1: #f3fcff;
+      --bg-2: #e4f7ff;
+      --bg-3: #ffffff;
+      --ink-1: #0f172a;
+      --ink-2: #334155;
+      --ink-3: #64748b;
+      --line: rgba(148, 163, 184, 0.2);
+      --white: #ffffff;
+      --cyan-1: #d9f8ff;
+      --cyan-2: #7dd3fc;
+      --cyan-3: #22c3ee;
+      --cyan-4: #0ea5e9;
+      --cyan-5: #0f8cbc;
+      --blue-1: #0d5e86;
+      --blue-2: #0a4361;
+      --shadow-soft: 0 24px 60px rgba(15, 23, 42, 0.12);
+      --shadow-card: 0 18px 45px rgba(15, 23, 42, 0.08);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --container: 1160px;
     }
 
     * {
@@ -46,10 +44,11 @@
     body {
       margin: 0;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      color: var(--slate-900);
+      color: var(--ink-1);
       background:
-        radial-gradient(circle at top, rgba(56, 189, 248, 0.22), transparent 28%),
-        linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 46%, #ffffff 100%);
+        radial-gradient(circle at top left, rgba(125, 211, 252, 0.26), transparent 28%),
+        radial-gradient(circle at top right, rgba(34, 195, 238, 0.14), transparent 24%),
+        linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 38%, var(--bg-3) 100%);
     }
 
     img {
@@ -62,77 +61,61 @@
       text-decoration: none;
     }
 
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
     .container {
       width: min(calc(100% - 2rem), var(--container));
       margin: 0 auto;
     }
 
-    .section {
-      padding: 88px 0;
-    }
-
-    .section-title {
-      margin: 0 0 14px;
-      font-size: clamp(2rem, 3vw, 3rem);
-      line-height: 1.1;
-    }
-
-    .section-kicker {
-      display: inline-block;
-      margin-bottom: 14px;
-      font-size: 0.8rem;
-      font-weight: 800;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--cyan-700);
-    }
-
-    .lead {
-      color: var(--slate-600);
-      line-height: 1.8;
-      font-size: 1.05rem;
-    }
-
-    .topbar {
+    .site-header {
       position: sticky;
       top: 0;
       z-index: 50;
-      backdrop-filter: blur(14px);
-      background: rgba(255, 255, 255, 0.82);
-      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+      backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.8);
+      border-bottom: 1px solid var(--line);
     }
 
-    .topbar-inner {
+    .site-header__inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      padding: 16px 0;
+      min-height: 78px;
     }
 
     .brand {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 900;
-      color: var(--cyan-700);
       letter-spacing: 0.02em;
+      color: var(--blue-1);
     }
 
-    .nav-links {
+    .nav {
       display: flex;
       flex-wrap: wrap;
-      gap: 18px;
+      gap: 1.2rem;
+      color: var(--ink-2);
       font-weight: 600;
-      color: var(--slate-700);
     }
 
-    .nav-links a:hover {
-      color: var(--cyan-700);
+    .nav a {
+      transition: color 0.25s ease;
+    }
+
+    .nav a:hover {
+      color: var(--cyan-5);
     }
 
     .hero {
       position: relative;
       overflow: hidden;
-      padding: 72px 0 56px;
+      padding: 56px 0 72px;
     }
 
     .hero::before,
@@ -140,57 +123,73 @@
       content: "";
       position: absolute;
       border-radius: 999px;
-      filter: blur(18px);
-      opacity: 0.45;
       pointer-events: none;
+      filter: blur(24px);
+      opacity: 0.7;
     }
 
     .hero::before {
-      top: 30px;
-      left: -90px;
-      width: 240px;
-      height: 240px;
-      background: rgba(34, 211, 238, 0.35);
+      top: 48px;
+      left: -120px;
+      width: 280px;
+      height: 280px;
+      background: rgba(34, 211, 238, 0.2);
     }
 
     .hero::after {
-      right: -110px;
-      bottom: 10px;
-      width: 280px;
-      height: 280px;
-      background: rgba(56, 189, 248, 0.25);
+      right: -140px;
+      bottom: 20px;
+      width: 320px;
+      height: 320px;
+      background: rgba(56, 189, 248, 0.18);
     }
 
-    .hero-grid {
+    .hero__grid {
       position: relative;
       display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
       gap: 32px;
       align-items: center;
-      grid-template-columns: 1.05fr 0.95fr;
     }
 
-    .hero-copy {
-      background: linear-gradient(135deg, rgba(10, 111, 153, 0.96), rgba(14, 165, 233, 0.92));
-      color: var(--white);
-      border-radius: 34px;
-      padding: clamp(28px, 4vw, 44px);
-      box-shadow: var(--shadow-soft);
+    .hero__content {
+      padding: clamp(1rem, 2vw, 1.4rem) 0;
     }
 
-    .hero-copy h1 {
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      min-height: 40px;
+      padding: 0 1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.84);
+      border: 1px solid rgba(125, 211, 252, 0.38);
+      color: var(--blue-1);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-card);
+    }
+
+    .hero__title {
+      margin: 22px 0 18px;
+      font-size: clamp(2.8rem, 6vw, 5.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      max-width: 9ch;
+    }
+
+    .hero__text {
       margin: 0;
-      font-size: clamp(2.4rem, 4.8vw, 4.6rem);
-      line-height: 1.02;
-    }
-
-    .hero-copy p {
-      margin: 18px 0 0;
+      max-width: 56ch;
+      color: var(--ink-2);
       font-size: 1.08rem;
-      line-height: 1.85;
-      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.9;
     }
 
-    .hero-actions {
+    .hero__actions {
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
@@ -201,332 +200,405 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 52px;
-      padding: 0 24px;
+      min-height: 54px;
+      padding: 0 22px;
       border-radius: 999px;
       border: 1px solid transparent;
-      font-weight: 700;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+      font-weight: 800;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     }
 
     .button:hover {
       transform: translateY(-2px);
     }
 
-    .button-primary {
-      background: var(--white);
-      color: var(--cyan-700);
-      box-shadow: 0 12px 25px rgba(255, 255, 255, 0.18);
-    }
-
-    .button-secondary {
-      border-color: rgba(255, 255, 255, 0.34);
+    .button--primary {
+      background: linear-gradient(135deg, var(--cyan-4), var(--cyan-5));
       color: var(--white);
-      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 18px 36px rgba(14, 165, 233, 0.25);
     }
 
-    .hero-side {
-      display: grid;
-      gap: 18px;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.92);
-      border: 1px solid rgba(226, 232, 240, 0.88);
-      border-radius: var(--radius-xl);
-      padding: 24px;
+    .button--ghost {
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(148, 163, 184, 0.24);
+      color: var(--ink-1);
       box-shadow: var(--shadow-card);
     }
 
-    .counter-card {
+    .hero__stats {
       display: grid;
-      gap: 18px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 28px;
     }
 
-    .counter-number {
-      margin: 0;
-      font-size: clamp(2.3rem, 3vw, 3.1rem);
-      color: var(--cyan-700);
+    .stat-card {
+      padding: 18px 20px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: var(--shadow-card);
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 2rem;
       line-height: 1;
+      color: var(--blue-1);
     }
 
-    .counter-caption {
-      margin: 0;
-      color: var(--slate-600);
+    .stat-card span {
+      display: block;
+      margin-top: 10px;
+      color: var(--ink-3);
       line-height: 1.6;
     }
 
-    .mascot-card {
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 249, 255, 0.96));
+    .hero__visual {
+      display: flex;
+      justify-content: center;
     }
 
-    .mascot-card::before {
+    .mascot-shell {
+      position: relative;
+      width: min(100%, 560px);
+      padding: 28px;
+      border-radius: 40px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(244, 251, 255, 0.88));
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .mascot-shell::before {
       content: "";
       position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(125, 211, 252, 0.3), transparent 28%),
-        linear-gradient(180deg, transparent 0%, rgba(8, 47, 73, 0.03) 100%);
-      pointer-events: none;
+      inset: auto auto -80px -60px;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: rgba(125, 211, 252, 0.2);
+      filter: blur(18px);
+      z-index: 0;
+    }
+
+    .mascot-shell::after {
+      content: "";
+      position: absolute;
+      inset: 20px 20px auto auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      filter: blur(22px);
+      z-index: 0;
     }
 
     .mascot-stage {
       position: relative;
-      width: min(100%, 430px);
+      z-index: 1;
+      width: min(100%, 500px);
       margin: 0 auto;
       aspect-ratio: 638 / 444;
-      isolation: isolate;
+      transform: translateY(4px);
     }
 
-    .mascot-water-mask {
+    .water-zone {
       position: absolute;
-      inset: 0;
       overflow: hidden;
-      -webkit-mask-image: url("./mascote-vazio.png");
-      mask-image: url("./mascote-vazio.png");
-      -webkit-mask-repeat: no-repeat;
-      mask-repeat: no-repeat;
-      -webkit-mask-position: center;
-      mask-position: center;
-      -webkit-mask-size: contain;
-      mask-size: contain;
+      pointer-events: none;
     }
 
-    .mascot-water-fill {
+    .water-zone--main {
+      left: 27.8%;
+      top: 5.4%;
+      width: 45.8%;
+      height: 74.5%;
+      border-radius: 50% 50% 36% 36% / 64% 64% 24% 24%;
+    }
+
+    .water-zone--left-foot {
+      left: 33.2%;
+      bottom: 3.5%;
+      width: 15.4%;
+      height: 12.8%;
+      border-radius: 48% 48% 42% 42% / 60% 60% 38% 38%;
+    }
+
+    .water-zone--right-foot {
+      right: 33%;
+      bottom: 3.5%;
+      width: 15.4%;
+      height: 12.8%;
+      border-radius: 48% 48% 42% 42% / 60% 60% 38% 38%;
+    }
+
+    .water-fill {
       position: absolute;
       left: 0;
       right: 0;
       bottom: 0;
       height: var(--fill-level);
       background:
-        linear-gradient(180deg, rgba(186, 230, 253, 0.78) 0%, rgba(56, 189, 248, 0.82) 34%, rgba(14, 165, 233, 0.88) 62%, rgba(6, 95, 130, 0.92) 100%);
-      opacity: 0.94;
-      transition: height 0.14s linear;
+        linear-gradient(180deg, rgba(217, 248, 255, 0.72) 0%, rgba(125, 211, 252, 0.78) 22%, rgba(34, 195, 238, 0.84) 56%, rgba(14, 165, 233, 0.9) 78%, rgba(9, 94, 134, 0.96) 100%);
+      opacity: 0.92;
+      transition: height 0.08s linear;
+      will-change: height;
     }
 
-    .mascot-water-fill::after {
+    .water-fill::before {
       content: "";
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 26% 22%, rgba(255, 255, 255, 0.24), transparent 16%),
-        radial-gradient(circle at 70% 35%, rgba(255, 255, 255, 0.18), transparent 12%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 42%);
+        radial-gradient(circle at 22% 20%, rgba(255, 255, 255, 0.28), transparent 18%),
+        radial-gradient(circle at 72% 34%, rgba(255, 255, 255, 0.2), transparent 14%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 42%);
       pointer-events: none;
     }
 
     .water-wave {
       position: absolute;
-      top: -14px;
       left: -8%;
       width: 116%;
       border-radius: 999px;
       pointer-events: none;
+      will-change: transform;
     }
 
-    .water-wave-back {
-      height: 24px;
-      opacity: 0.5;
-      background: rgba(186, 230, 253, 0.72);
+    .water-wave--back {
+      top: -20px;
+      height: 28px;
+      background: rgba(198, 240, 255, 0.68);
       filter: blur(2px);
-      animation: waveBack 5.5s ease-in-out infinite;
+      animation: wave-back 7s ease-in-out infinite;
     }
 
-    .water-wave-front {
-      top: -9px;
-      height: 18px;
-      opacity: 0.82;
+    .water-wave--front {
+      top: -12px;
+      height: 20px;
       background: rgba(255, 255, 255, 0.56);
-      animation: waveFront 3.8s ease-in-out infinite;
+      animation: wave-front 4.2s ease-in-out infinite;
     }
 
-    .mascot-base,
-    .mascot-outline {
+    .mascot-image {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: contain;
-      object-position: center;
+      pointer-events: none;
       user-select: none;
       -webkit-user-drag: none;
     }
 
-    .mascot-base {
+    .mascot-image--base {
       opacity: 0.18;
-      filter: grayscale(1) brightness(1.08);
+      filter: grayscale(1) brightness(1.06);
     }
 
-    .mascot-outline {
+    .mascot-image--overlay {
       z-index: 3;
       mix-blend-mode: multiply;
+      opacity: 0.98;
     }
 
-    .scroll-meter {
+    .scroll-chip {
       position: fixed;
       right: 18px;
       bottom: 18px;
-      z-index: 30;
-      display: flex;
-      flex-direction: column;
+      z-index: 60;
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
-      min-width: 86px;
-      padding: 12px 14px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(203, 213, 225, 0.9);
-      box-shadow: var(--shadow-card);
-      color: var(--slate-700);
-    }
-
-    .scroll-meter strong {
-      font-size: 1.2rem;
-      color: var(--cyan-700);
-    }
-
-    .scroll-bar {
-      width: 56px;
-      height: 8px;
+      gap: 0.7rem;
+      min-height: 54px;
+      padding: 0 16px;
       border-radius: 999px;
-      background: var(--slate-200);
-      overflow: hidden;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      box-shadow: var(--shadow-card);
+      color: var(--ink-2);
+      font-weight: 700;
+      backdrop-filter: blur(14px);
     }
 
-    .scroll-bar-fill {
+    .scroll-chip__value {
+      min-width: 48px;
+      color: var(--blue-1);
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .scroll-chip__bar {
+      width: 74px;
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(226, 232, 240, 0.92);
+    }
+
+    .scroll-chip__bar-fill {
       width: var(--fill-level);
       height: 100%;
       border-radius: inherit;
-      background: linear-gradient(90deg, #67e8f9, #0ea5e9);
-      transition: width 0.14s linear;
+      background: linear-gradient(90deg, var(--cyan-2), var(--cyan-4));
+      transition: width 0.08s linear;
+    }
+
+    .section {
+      padding: 86px 0;
+    }
+
+    .section--muted {
+      background: rgba(241, 245, 249, 0.58);
+      border-top: 1px solid rgba(226, 232, 240, 0.7);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+    }
+
+    .section__eyebrow {
+      display: inline-block;
+      margin-bottom: 14px;
+      color: var(--cyan-5);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .section__title {
+      margin: 0;
+      font-size: clamp(2rem, 3vw, 3.4rem);
+      line-height: 1.04;
+      letter-spacing: -0.04em;
+    }
+
+    .section__text {
+      max-width: 62ch;
+      margin: 16px 0 0;
+      color: var(--ink-2);
+      line-height: 1.85;
     }
 
     .about-grid,
-    .contact-grid {
+    .contact-grid,
+    .reviews-grid {
       display: grid;
       gap: 24px;
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: start;
     }
 
-    .benefits-grid {
-      display: grid;
-      gap: 22px;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      margin-top: 34px;
+    .card {
+      padding: 28px;
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(226, 232, 240, 0.92);
+      box-shadow: var(--shadow-card);
     }
 
-    .benefit-card h3,
-    .contact-card h3,
-    .about-card h3 {
+    .card h3 {
       margin: 0 0 12px;
       font-size: 1.2rem;
     }
 
-    .benefit-card p,
-    .contact-card p,
-    .about-card p {
+    .card p {
       margin: 0;
-      color: var(--slate-600);
-      line-height: 1.75;
+      color: var(--ink-2);
+      line-height: 1.8;
     }
 
-    .benefit-number {
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      margin-top: 32px;
+    }
+
+    .benefit-card__number {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 42px;
-      height: 42px;
-      margin-bottom: 14px;
-      border-radius: 14px;
-      background: var(--cyan-100);
-      color: var(--cyan-700);
+      width: 44px;
+      height: 44px;
+      margin-bottom: 16px;
+      border-radius: 16px;
+      background: var(--cyan-1);
+      color: var(--blue-1);
       font-weight: 900;
     }
 
-    .muted-section {
-      background: rgba(241, 245, 249, 0.68);
-      border-top: 1px solid rgba(226, 232, 240, 0.9);
-      border-bottom: 1px solid rgba(226, 232, 240, 0.9);
-    }
-
-    .video-placeholder {
+    .media-card {
+      min-height: 320px;
       display: grid;
       place-items: center;
-      min-height: 360px;
-      margin-top: 26px;
-      border: 2px dashed rgba(15, 139, 188, 0.24);
-      border-radius: 32px;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(240, 249, 255, 0.94));
-      color: var(--slate-600);
       text-align: center;
-      padding: 28px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 249, 255, 0.96));
     }
 
-    .form-grid {
-      display: grid;
-      gap: 24px;
-      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-      align-items: start;
+    .media-card strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1.25rem;
+      color: var(--ink-1);
     }
 
-    .form-card,
-    .reviews-card {
-      height: 100%;
+    .field {
+      display: block;
+      margin-bottom: 16px;
     }
 
-    .field-label {
+    .field span {
       display: block;
       margin-bottom: 8px;
+      color: var(--ink-2);
       font-weight: 700;
-      color: var(--slate-700);
     }
 
     .input,
     .textarea {
       width: 100%;
-      border: 1px solid var(--slate-200);
-      border-radius: 16px;
+      border: 1px solid rgba(203, 213, 225, 0.9);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.96);
+      color: var(--ink-1);
       padding: 14px 16px;
-      font: inherit;
-      color: var(--slate-900);
-      background: var(--white);
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
     .textarea {
-      min-height: 140px;
+      min-height: 150px;
       resize: vertical;
     }
 
     .input:focus,
     .textarea:focus {
       outline: none;
-      border-color: var(--cyan-500);
-      box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.12);
+      border-color: rgba(14, 165, 233, 0.7);
+      box-shadow: 0 0 0 4px rgba(125, 211, 252, 0.18);
     }
 
-    .form-feedback {
+    .feedback {
       display: none;
-      margin-top: 14px;
+      margin: 0 0 16px;
       padding: 12px 14px;
-      border-radius: 14px;
+      border-radius: 16px;
       font-size: 0.95rem;
       line-height: 1.6;
     }
 
-    .form-feedback.is-visible {
+    .feedback.is-visible {
       display: block;
     }
 
-    .form-feedback.is-error {
+    .feedback.is-error {
       background: #fef2f2;
       color: #b91c1c;
     }
 
-    .form-feedback.is-success {
+    .feedback.is-success {
       background: #ecfdf5;
       color: #047857;
     }
@@ -534,36 +606,35 @@
     .review-list {
       display: grid;
       gap: 14px;
-      margin-top: 0;
     }
 
-    .review-item {
+    .review {
       padding: 18px;
-      border: 1px solid rgba(226, 232, 240, 0.9);
       border-radius: 18px;
-      background: var(--white);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      background: rgba(255, 255, 255, 0.94);
     }
 
-    .review-item strong {
+    .review strong {
       display: block;
       margin-bottom: 8px;
-      font-size: 1.02rem;
+      color: var(--ink-1);
     }
 
-    .review-item p {
+    .review p {
       margin: 0;
-      color: var(--slate-600);
-      line-height: 1.7;
+      color: var(--ink-2);
+      line-height: 1.75;
     }
 
-    .empty-state {
-      color: var(--slate-400);
+    .review--empty {
       text-align: center;
+      color: var(--ink-3);
       border-style: dashed;
     }
 
     .contact-card {
-      background: linear-gradient(135deg, rgba(11, 111, 153, 1), rgba(2, 132, 199, 0.92));
+      background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
       color: var(--white);
     }
 
@@ -575,98 +646,111 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      margin-top: 18px;
-      min-height: 50px;
-      padding: 0 22px;
+      min-height: 52px;
+      margin-top: 20px;
+      padding: 0 20px;
       border-radius: 999px;
-      background: var(--white);
-      color: var(--cyan-700);
+      background: rgba(255, 255, 255, 0.96);
+      color: var(--blue-1);
       font-weight: 800;
+      box-shadow: 0 12px 28px rgba(255, 255, 255, 0.14);
     }
 
-    .footer {
-      padding: 22px 0 32px;
+    .site-footer {
+      padding: 28px 0 34px;
       text-align: center;
-      color: var(--slate-600);
+      color: var(--ink-3);
     }
 
-    @keyframes waveBack {
+    @keyframes wave-back {
       0%, 100% {
         transform: translateX(-2%) scaleY(1);
       }
       50% {
-        transform: translateX(2%) scaleY(1.1);
+        transform: translateX(2%) scaleY(1.08);
       }
     }
 
-    @keyframes waveFront {
+    @keyframes wave-front {
       0%, 100% {
-        transform: translateX(3%) scaleY(1);
+        transform: translateX(2%) scaleY(1);
       }
       50% {
-        transform: translateX(-3%) scaleY(0.92);
+        transform: translateX(-2%) scaleY(0.92);
       }
     }
 
-    @media (max-width: 960px) {
-      .hero-grid,
+    @media (max-width: 980px) {
+      .hero__grid,
       .about-grid,
-      .benefits-grid,
-      .form-grid,
-      .contact-grid {
+      .contact-grid,
+      .reviews-grid,
+      .benefits-grid {
         grid-template-columns: 1fr;
       }
 
-      .scroll-meter {
-        right: 12px;
-        bottom: 12px;
+      .hero__visual {
+        order: -1;
+      }
+
+      .hero__title {
+        max-width: 12ch;
       }
     }
 
-    @media (max-width: 700px) {
-      .topbar-inner {
+    @media (max-width: 760px) {
+      .site-header__inner {
         flex-direction: column;
         align-items: flex-start;
+        justify-content: center;
+        padding: 14px 0;
       }
 
-      .nav-links {
-        gap: 12px;
+      .nav {
+        gap: 0.9rem 1rem;
         font-size: 0.95rem;
       }
 
       .hero {
-        padding-top: 48px;
+        padding-top: 34px;
       }
 
-      .hero-copy,
+      .hero__stats {
+        grid-template-columns: 1fr;
+      }
+
+      .mascot-shell,
       .card {
-        padding: 20px;
+        padding: 22px;
       }
 
       .section {
-        padding: 68px 0;
+        padding: 72px 0;
+      }
+
+      .scroll-chip {
+        right: 12px;
+        bottom: 12px;
       }
     }
   </style>
 </head>
-
 <body>
-  <div class="scroll-meter" aria-live="polite">
-    <span>Scroll</span>
-    <strong id="scrollPercent">0%</strong>
-    <div class="scroll-bar" aria-hidden="true">
-      <div class="scroll-bar-fill"></div>
+  <div class="scroll-chip" aria-live="polite">
+    <span class="scroll-chip__label">Scroll</span>
+    <div class="scroll-chip__bar" aria-hidden="true">
+      <div class="scroll-chip__bar-fill"></div>
     </div>
+    <span class="scroll-chip__value" id="scrollPercent">0%</span>
   </div>
 
-  <header class="topbar">
-    <div class="container topbar-inner">
+  <header class="site-header">
+    <div class="container site-header__inner">
       <a href="#inicio" class="brand">Água Limpa</a>
 
-      <nav class="nav-links" aria-label="Navegação principal">
+      <nav class="nav" aria-label="Navegação principal">
         <a href="#sobre">Sobre</a>
-        <a href="#mascote">Mascote</a>
-        <a href="#saude">Benefícios</a>
+        <a href="#beneficios">Benefícios</a>
         <a href="#avaliacoes">Avaliações</a>
         <a href="#contato">Contato</a>
       </nav>
@@ -674,298 +758,299 @@
   </header>
 
   <main>
-    <section id="inicio" class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <span class="section-kicker" style="color: rgba(255,255,255,0.86);">Projeto social</span>
-          <h1>Água limpa muda vidas todos os dias</h1>
-          <p>
+    <section class="hero" id="inicio">
+      <div class="container hero__grid">
+        <div class="hero__content">
+          <span class="eyebrow">Projeto Social</span>
+          <h1 class="hero__title">Água limpa transforma vidas.</h1>
+          <p class="hero__text">
             Um projeto de conscientização sobre saúde, prevenção de doenças e qualidade de vida
-            por meio do acesso à água limpa.
+            por meio do acesso à água potável.
           </p>
 
-          <div class="hero-actions">
-            <a href="#mascote" class="button button-primary">Ver animação</a>
-            <a href="#contato" class="button button-secondary">Entrar em contato</a>
+          <div class="hero__actions">
+            <a href="#sobre" class="button button--primary">Conhecer o projeto</a>
+            <a href="#contato" class="button button--ghost">Entrar em contato</a>
           </div>
-        </div>
 
-        <div class="hero-side">
-          <div class="card counter-card">
-            <div>
-              <span class="section-kicker">Visitantes</span>
-              <p class="counter-number" id="contador">1</p>
-              <p class="counter-caption" id="contadorDescricao">
-                Este navegador foi contabilizado apenas no primeiro acesso.
-              </p>
+          <div class="hero__stats">
+            <div class="stat-card">
+              <strong id="contador">1</strong>
+              <span>Visitantes registrados</span>
+            </div>
+
+            <div class="stat-card">
+              <strong>Mais cuidado</strong>
+              <span>Informação, prevenção e bem-estar para a comunidade.</span>
             </div>
           </div>
-
-          <div class="card">
-            <span class="section-kicker">Destaque</span>
-            <p class="lead" style="margin: 0;">
-              O mascote abaixo começa vazio e vai sendo preenchido com água conforme o usuário desce a página.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="sobre" class="section">
-      <div class="container about-grid">
-        <div class="card about-card">
-          <span class="section-kicker">Sobre o projeto</span>
-          <h2 class="section-title">Conscientização com uma linguagem simples e visual</h2>
-          <p class="lead">
-            O Projeto Água Limpa busca destacar como a água potável influencia diretamente a saúde,
-            a higiene e a qualidade de vida. A proposta é compartilhar conhecimento de forma simples e acessível.
-          </p>
         </div>
 
-        <div class="card about-card">
-          <h3>Objetivo</h3>
-          <p>
-            Mostrar que o acesso à água de qualidade é essencial para reduzir riscos, promover bem-estar
-            e fortalecer o desenvolvimento social da comunidade.
-          </p>
-        </div>
-      </div>
-    </section>
+        <div class="hero__visual">
+          <div class="mascot-shell">
+            <div class="mascot-stage" aria-label="Mascote do projeto com preenchimento de água">
+              <img
+                src="./mascote-vazio.png"
+                alt=""
+                class="mascot-image mascot-image--base"
+                aria-hidden="true"
+              >
 
-    <section id="mascote" class="section muted-section">
-      <div class="container">
-        <span class="section-kicker">Animação com scroll</span>
-        <h2 class="section-title">O mascote enche de água do começo ao fim da página</h2>
-        <p class="lead" style="max-width: 760px; margin: 0 0 28px;">
-          O preenchimento é proporcional ao scroll, parte de 0% e chega a 100% no fim do site.
-          O efeito usa gradiente azul, transparência leve, onda animada e atualização otimizada com
-          <code>requestAnimationFrame</code>.
-        </p>
-
-        <div class="card mascot-card">
-          <div class="mascot-stage" aria-label="Mascote com preenchimento de água baseado no scroll">
-            <img
-              src="./mascote-vazio.png"
-              alt=""
-              class="mascot-base"
-              aria-hidden="true"
-            >
-
-            <div class="mascot-water-mask" aria-hidden="true">
-              <div class="mascot-water-fill" id="waterFill">
-                <div class="water-wave water-wave-back"></div>
-                <div class="water-wave water-wave-front"></div>
+              <div class="water-zone water-zone--main" aria-hidden="true">
+                <div class="water-fill">
+                  <div class="water-wave water-wave--back"></div>
+                  <div class="water-wave water-wave--front"></div>
+                </div>
               </div>
+
+              <div class="water-zone water-zone--left-foot" aria-hidden="true">
+                <div class="water-fill"></div>
+              </div>
+
+              <div class="water-zone water-zone--right-foot" aria-hidden="true">
+                <div class="water-fill"></div>
+              </div>
+
+              <img
+                src="./mascote-vazio.png"
+                alt="Mascote do projeto Água Limpa"
+                class="mascot-image mascot-image--overlay"
+              >
             </div>
-
-            <img
-              src="./mascote-vazio.png"
-              alt="Mascote do projeto Água Limpa"
-              class="mascot-outline"
-            >
           </div>
         </div>
       </div>
     </section>
 
-    <section id="tutorial" class="section">
-      <div class="container">
-        <span class="section-kicker">Tutorial</span>
-        <h2 class="section-title">Espaço reservado para o vídeo do projeto</h2>
-        <div class="video-placeholder">
-          <div>
-            <h3 style="margin-top: 0;">Vídeo em breve</h3>
-            <p class="lead" style="margin: 0; max-width: 620px;">
-              Quando você receber o link, basta substituir esta área por um <code>iframe</code> do YouTube.
-            </p>
-          </div>
+    <section class="section" id="sobre">
+      <div class="container about-grid">
+        <div class="card">
+          <span class="section__eyebrow">Sobre</span>
+          <h2 class="section__title">Conscientização com linguagem simples e acessível.</h2>
+          <p class="section__text">
+            O Projeto Água Limpa mostra como o acesso à água potável influencia diretamente a saúde,
+            a higiene e a qualidade de vida das pessoas.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Compromisso</h3>
+          <p>
+            Levar informação clara, despertar cuidado coletivo e reforçar a importância da água
+            de qualidade para um futuro mais saudável.
+          </p>
         </div>
       </div>
     </section>
 
-    <section id="saude" class="section muted-section">
+    <section class="section section--muted" id="beneficios">
       <div class="container">
-        <span class="section-kicker">Benefícios</span>
-        <h2 class="section-title">Como a água limpa melhora a saúde</h2>
+        <span class="section__eyebrow">Benefícios</span>
+        <h2 class="section__title">Como a água limpa faz diferença no dia a dia.</h2>
 
         <div class="benefits-grid">
           <article class="card benefit-card">
-            <span class="benefit-number">1</span>
+            <span class="benefit-card__number">1</span>
             <h3>Previne doenças</h3>
-            <p>Reduz o risco de contaminações causadas por água imprópria para consumo.</p>
+            <p>Reduz o risco de contaminações e problemas causados por água imprópria para consumo.</p>
           </article>
 
           <article class="card benefit-card">
-            <span class="benefit-number">2</span>
+            <span class="benefit-card__number">2</span>
             <h3>Melhora a qualidade de vida</h3>
-            <p>Contribui para higiene, segurança e bem-estar das famílias.</p>
+            <p>Contribui para higiene, segurança e bem-estar na rotina das famílias.</p>
           </article>
 
           <article class="card benefit-card">
-            <span class="benefit-number">3</span>
-            <h3>Promove bem-estar</h3>
-            <p>Ajuda no desenvolvimento social e fortalece a saúde coletiva.</p>
+            <span class="benefit-card__number">3</span>
+            <h3>Fortalece a comunidade</h3>
+            <p>Promove desenvolvimento social, dignidade e mais cuidado com a saúde coletiva.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="avaliacoes" class="section">
+    <section class="section">
       <div class="container">
-        <span class="section-kicker">Avaliações</span>
-        <h2 class="section-title">Comentários de visitantes</h2>
+        <div class="card media-card">
+          <div>
+            <strong>Vídeo em breve</strong>
+            <p>O espaço está pronto para receber o conteúdo principal do projeto.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <div class="form-grid">
-          <div class="card form-card">
+    <section class="section section--muted" id="avaliacoes">
+      <div class="container">
+        <span class="section__eyebrow">Avaliações</span>
+        <h2 class="section__title">Mensagens de quem visitou a página.</h2>
+
+        <div class="reviews-grid" style="margin-top: 28px;">
+          <div class="card">
             <form id="formAvaliacao" novalidate>
-              <label class="field-label" for="nome">Seu nome</label>
-              <input
-                type="text"
-                id="nome"
-                class="input"
-                placeholder="Digite seu nome"
-                required
-              >
+              <label class="field">
+                <span>Seu nome</span>
+                <input
+                  type="text"
+                  id="nome"
+                  class="input"
+                  placeholder="Digite seu nome"
+                  required
+                >
+              </label>
 
-              <label class="field-label" for="comentario" style="margin-top: 18px;">Seu comentário</label>
-              <textarea
-                id="comentario"
-                class="textarea"
-                placeholder="Escreva sua opinião"
-                required
-              ></textarea>
+              <label class="field">
+                <span>Seu comentário</span>
+                <textarea
+                  id="comentario"
+                  class="textarea"
+                  placeholder="Escreva sua opinião"
+                  required
+                ></textarea>
+              </label>
 
-              <div id="mensagemFormulario" class="form-feedback" aria-live="polite"></div>
+              <div id="mensagemFormulario" class="feedback" aria-live="polite"></div>
 
-              <button type="submit" class="button" style="margin-top: 18px; width: 100%; background: var(--cyan-600); color: var(--white);">
+              <button type="submit" class="button button--primary" style="width: 100%;">
                 Enviar avaliação
               </button>
             </form>
           </div>
 
-          <div class="card reviews-card">
+          <div class="card">
             <div id="listaAvaliacoes" class="review-list"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="contato" class="section">
+    <section class="section" id="contato">
       <div class="container contact-grid">
         <div class="card contact-card">
-          <span class="section-kicker" style="color: rgba(255,255,255,0.82);">Contato</span>
-          <h2 class="section-title" style="margin-top: 0;">Fale conosco</h2>
+          <span class="section__eyebrow" style="color: rgba(255,255,255,0.8);">Contato</span>
+          <h2 class="section__title">Fale com o projeto.</h2>
           <p>
-            Para mais informações sobre o projeto, entre em contato pelo e-mail abaixo.
+            Entre em contato para conversar sobre a iniciativa e compartilhar ideias.
           </p>
           <a href="mailto:pedro.pereira1@aedb.br" class="contact-link">
             pedro.pereira1@aedb.br
           </a>
         </div>
 
-        <div class="card about-card">
-          <h3>Observação sobre o contador</h3>
+        <div class="card">
+          <h3>Água limpa, saúde e futuro</h3>
           <p>
-            Em um site estático, sem servidor ou banco de dados, não existe uma forma confiável de contar
-            dispositivos únicos no mundo todo. Por isso, esta página registra somente o primeiro acesso neste navegador.
+            Pequenas ações de conscientização ajudam a construir comunidades mais fortes,
+            saudáveis e preparadas para o amanhã.
           </p>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
+  <footer class="site-footer">
     <div class="container">
       © 2026 Projeto Água Limpa. Todos os direitos reservados.
     </div>
   </footer>
 
   <script>
-    const contador = document.getElementById("contador");
-    const contadorDescricao = document.getElementById("contadorDescricao");
-    const scrollPercent = document.getElementById("scrollPercent");
     const root = document.documentElement;
+    const scrollPercent = document.getElementById("scrollPercent");
+    const contador = document.getElementById("contador");
     const form = document.getElementById("formAvaliacao");
-    const lista = document.getElementById("listaAvaliacoes");
+    const listaAvaliacoes = document.getElementById("listaAvaliacoes");
     const mensagemFormulario = document.getElementById("mensagemFormulario");
 
-    let latestScrollProgress = 0;
-    let ticking = false;
+    let currentFill = 0;
+    let targetFill = 0;
+    let animationFrameId = 0;
 
-    // Conta apenas o primeiro acesso neste navegador.
     function configurarContador() {
-      const chaveContador = "contadorDispositivosAguaLimpa";
-      const chaveVisitaRegistrada = "dispositivoRegistradoAguaLimpa";
+      const contadorKey = "contadorDispositivosAguaLimpa";
+      const dispositivoKey = "dispositivoRegistradoAguaLimpa";
+      let visitas = Number(localStorage.getItem(contadorKey)) || 0;
 
-      let visitas = Number(localStorage.getItem(chaveContador)) || 0;
-      const visitaJaRegistrada = localStorage.getItem(chaveVisitaRegistrada) === "true";
-
-      if (!visitaJaRegistrada) {
+      if (localStorage.getItem(dispositivoKey) !== "true") {
         visitas += 1;
-        localStorage.setItem(chaveContador, String(visitas));
-        localStorage.setItem(chaveVisitaRegistrada, "true");
-        contadorDescricao.textContent = "Primeiro acesso registrado neste navegador.";
-      } else {
-        contadorDescricao.textContent = "Este navegador já foi contabilizado.";
+        localStorage.setItem(contadorKey, String(visitas));
+        localStorage.setItem(dispositivoKey, "true");
       }
 
       contador.textContent = String(visitas);
     }
 
-    // Calcula o progresso da rolagem entre 0 e 100.
-    function obterProgressoScroll() {
-      const areaRolavel = document.documentElement.scrollHeight - window.innerHeight;
-
-      if (areaRolavel <= 0) {
+    function calcularScroll() {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (maxScroll <= 0) {
         return 0;
       }
 
-      return Math.min(window.scrollY / areaRolavel, 1);
+      return Math.min(window.scrollY / maxScroll, 1) * 100;
     }
 
-    // Atualiza variáveis visuais com base no scroll.
-    function aplicarPreenchimento(progress) {
-      const percentual = Math.round(progress * 100);
-      root.style.setProperty("--fill-level", percentual + "%");
-      scrollPercent.textContent = percentual + "%";
+    function aplicarFill(value) {
+      const safeValue = Math.max(0, Math.min(100, value));
+      root.style.setProperty("--fill-level", safeValue.toFixed(2) + "%");
+      scrollPercent.textContent = Math.round(safeValue) + "%";
     }
 
-    // requestAnimationFrame evita várias atualizações pesadas por scroll.
-    function agendarAtualizacao() {
-      latestScrollProgress = obterProgressoScroll();
-
-      if (ticking) {
+    function iniciarAnimacao() {
+      if (animationFrameId) {
         return;
       }
 
-      ticking = true;
+      const loop = () => {
+        const delta = targetFill - currentFill;
+        currentFill += delta * 0.085;
 
-      window.requestAnimationFrame(() => {
-        aplicarPreenchimento(latestScrollProgress);
-        ticking = false;
-      });
+        if (Math.abs(delta) < 0.04) {
+          currentFill = targetFill;
+        }
+
+        aplicarFill(currentFill);
+
+        if (Math.abs(targetFill - currentFill) > 0.02) {
+          animationFrameId = window.requestAnimationFrame(loop);
+        } else {
+          animationFrameId = 0;
+        }
+      };
+
+      animationFrameId = window.requestAnimationFrame(loop);
     }
 
-    function renderizarEstadoVazio() {
-      const aviso = document.createElement("div");
-      aviso.className = "review-item empty-state";
-      aviso.textContent = "Nenhuma avaliação ainda. Seja a primeira pessoa a comentar.";
-      lista.appendChild(aviso);
+    function atualizarTarget() {
+      targetFill = calcularScroll();
+      iniciarAnimacao();
     }
 
-    // Renderiza avaliações com textContent para evitar injeção de HTML.
+    function mostrarMensagem(texto, tipo) {
+      mensagemFormulario.textContent = texto;
+      mensagemFormulario.className = "feedback is-visible";
+      mensagemFormulario.classList.add(tipo === "erro" ? "is-error" : "is-success");
+    }
+
+    function criarEstadoVazio() {
+      const empty = document.createElement("div");
+      empty.className = "review review--empty";
+      empty.textContent = "Nenhuma avaliação ainda. Seja a primeira pessoa a comentar.";
+      listaAvaliacoes.appendChild(empty);
+    }
+
     function carregarAvaliacoes() {
       const dados = JSON.parse(localStorage.getItem("avaliacoesAguaLimpa")) || [];
-      lista.innerHTML = "";
+      listaAvaliacoes.innerHTML = "";
 
       if (dados.length === 0) {
-        renderizarEstadoVazio();
+        criarEstadoVazio();
         return;
       }
 
       dados.forEach((item) => {
-        const card = document.createElement("article");
-        card.className = "review-item";
+        const review = document.createElement("article");
+        review.className = "review";
 
         const nome = document.createElement("strong");
         nome.textContent = item.nome;
@@ -973,22 +1058,10 @@
         const comentario = document.createElement("p");
         comentario.textContent = item.comentario;
 
-        card.appendChild(nome);
-        card.appendChild(comentario);
-        lista.appendChild(card);
+        review.appendChild(nome);
+        review.appendChild(comentario);
+        listaAvaliacoes.appendChild(review);
       });
-    }
-
-    function mostrarMensagem(texto, tipo) {
-      mensagemFormulario.textContent = texto;
-      mensagemFormulario.className = "form-feedback is-visible";
-
-      if (tipo === "erro") {
-        mensagemFormulario.classList.add("is-error");
-        return;
-      }
-
-      mensagemFormulario.classList.add("is-success");
     }
 
     form.addEventListener("submit", (event) => {
@@ -1011,12 +1084,14 @@
       mostrarMensagem("Avaliação enviada com sucesso.", "sucesso");
     });
 
-    window.addEventListener("scroll", agendarAtualizacao, { passive: true });
-    window.addEventListener("resize", agendarAtualizacao);
+    window.addEventListener("scroll", atualizarTarget, { passive: true });
+    window.addEventListener("resize", atualizarTarget);
 
     configurarContador();
     carregarAvaliacoes();
-    aplicarPreenchimento(obterProgressoScroll());
+    currentFill = calcularScroll();
+    targetFill = currentFill;
+    aplicarFill(currentFill);
   </script>
 </body>
 </html>
