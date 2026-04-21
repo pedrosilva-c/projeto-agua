@@ -1,1093 +1,437 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projeto Agua Limpa</title>
   <title>Projeto Água Limpa</title>
   <meta
     name="description"
+    content="Projeto social sobre a importancia da agua limpa para a saude, a prevencao de doencas e a qualidade de vida."
     content="Projeto social sobre a importância da água limpa para a saúde, a prevenção de doenças e a qualidade de vida."
   >
-  <style>
-    :root {
-      --fill-level: 0%;
-      --surface-1: #f6fcff;
-      --surface-2: #edf9ff;
-      --surface-3: #ffffff;
-      --line: rgba(148, 163, 184, 0.18);
-      --text-1: #0f172a;
-      --text-2: #334155;
-      --text-3: #64748b;
-      --white: #ffffff;
-      --blue-50: #dff7ff;
-      --blue-200: #8fe6ff;
-      --blue-400: #2ac4ee;
-      --blue-500: #10a5e8;
-      --blue-600: #0d89bf;
-      --blue-700: #0a628f;
-      --blue-900: #073d5c;
-      --shadow-soft: 0 28px 70px rgba(15, 23, 42, 0.12);
-      --shadow-card: 0 18px 40px rgba(15, 23, 42, 0.08);
-      --radius-xl: 36px;
-      --radius-lg: 26px;
-      --container: 1100px;
-    }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      color: var(--text-1);
-      background:
-        radial-gradient(circle at top left, rgba(143, 230, 255, 0.28), transparent 26%),
-        radial-gradient(circle at top right, rgba(42, 196, 238, 0.12), transparent 22%),
-        linear-gradient(180deg, var(--surface-1) 0%, var(--surface-2) 34%, var(--surface-3) 100%);
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button,
-    input,
-    textarea {
-      font: inherit;
-    }
-
-    .container {
-      width: min(calc(100% - 2rem), var(--container));
-      margin: 0 auto;
-    }
-
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(16px);
-      background: rgba(255, 255, 255, 0.82);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .site-header__inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      min-height: 78px;
-    }
-
-    .brand {
-      color: var(--blue-700);
-      font-size: 1.12rem;
-      font-weight: 900;
-      letter-spacing: 0.02em;
-    }
-
-    .nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.2rem;
-      color: var(--text-2);
-      font-weight: 600;
-    }
-
-    .nav a {
-      transition: color 0.24s ease;
-    }
-
-    .nav a:hover {
-      color: var(--blue-600);
-    }
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      min-height: calc(100vh - 78px);
-      display: flex;
-      align-items: center;
-      padding: 80px 0;
-    }
-
-    .hero::before,
-    .hero::after {
-      content: "";
-      position: absolute;
-      border-radius: 999px;
-      pointer-events: none;
-      filter: blur(28px);
-      opacity: 0.78;
-    }
-
-    .hero::before {
-      top: 40px;
-      left: -140px;
-      width: 300px;
-      height: 300px;
-      background: rgba(125, 211, 252, 0.22);
-    }
-
-    .hero::after {
-      right: -120px;
-      bottom: 20px;
-      width: 320px;
-      height: 320px;
-      background: rgba(42, 196, 238, 0.16);
-    }
-
-    .hero__grid {
-      position: relative;
-      display: grid;
-      grid-template-columns: minmax(0, 0.98fr) minmax(0, 1.02fr);
-      gap: 56px;
-      align-items: center;
-      width: 100%;
-    }
-
-    .hero__content {
-      max-width: 520px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      min-height: 40px;
-      padding: 0 1rem;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.86);
-      border: 1px solid rgba(143, 230, 255, 0.42);
-      box-shadow: var(--shadow-card);
-      color: var(--blue-700);
-      font-size: 0.8rem;
-      font-weight: 800;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-
-    .hero__title {
-      margin: 24px 0 18px;
-      font-size: clamp(3rem, 7vw, 5.7rem);
-      line-height: 0.92;
-      letter-spacing: -0.06em;
-      text-wrap: balance;
-    }
-
-    .hero__text {
-      margin: 0;
-      color: var(--text-2);
-      font-size: 1.08rem;
-      line-height: 1.9;
-    }
-
-    .hero__actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 30px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 54px;
-      padding: 0 22px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      font-weight: 800;
-      transition:
-        transform 0.28s ease,
-        box-shadow 0.28s ease,
-        background-color 0.28s ease,
-        border-color 0.28s ease;
-    }
-
-    .button:hover {
-      transform: translateY(-2px);
-    }
-
-    .button--primary {
-      background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
-      color: var(--white);
-      box-shadow: 0 16px 34px rgba(16, 165, 232, 0.24);
-    }
-
-    .button--primary:hover {
-      box-shadow: 0 22px 44px rgba(16, 165, 232, 0.3);
-    }
-
-    .button--secondary {
-      background: rgba(255, 255, 255, 0.84);
-      border-color: rgba(148, 163, 184, 0.22);
-      box-shadow: var(--shadow-card);
-      color: var(--text-1);
-    }
-
-    .button--secondary:hover {
-      border-color: rgba(16, 165, 232, 0.2);
-    }
-
-    .hero__metrics {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 32px;
-    }
-
-    .metric-card {
-      padding: 18px 20px;
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid rgba(226, 232, 240, 0.88);
-      box-shadow: var(--shadow-card);
-    }
-
-    .metric-card strong {
-      display: block;
-      font-size: 2rem;
-      line-height: 1;
-      color: var(--blue-700);
-    }
-
-    .metric-card span {
-      display: block;
-      margin-top: 10px;
-      color: var(--text-3);
-      line-height: 1.6;
-    }
-
-    .hero__visual {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .mascot-card {
-      position: relative;
-      width: min(100%, 560px);
-      padding: 34px;
-      border-radius: 40px;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(243, 251, 255, 0.92));
-      border: 1px solid rgba(255, 255, 255, 0.72);
-      box-shadow: var(--shadow-soft);
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    .mascot-card::before {
-      content: "";
-      position: absolute;
-      left: -60px;
-      bottom: -90px;
-      width: 220px;
-      height: 220px;
-      border-radius: 999px;
-      background: rgba(143, 230, 255, 0.22);
-      filter: blur(20px);
-      z-index: 0;
-    }
-
-    .mascot-card::after {
-      content: "";
-      position: absolute;
-      top: 26px;
-      right: 26px;
-      width: 130px;
-      height: 130px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.78);
-      filter: blur(28px);
-      z-index: 0;
-    }
-
-    .mascot-stage {
-      position: relative;
-      z-index: 1;
-      width: min(100%, 520px);
-      margin: 0 auto;
-      aspect-ratio: 638 / 444;
-      animation: mascot-float 6.2s ease-in-out infinite;
-      transform-origin: center;
-    }
-
-    .mascot-fill-area {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      clip-path: polygon(
-        30.2% 9.2%,
-        35.4% 4.5%,
-        40.8% 1.3%,
-        44.2% 0.8%,
-        44.6% 5.6%,
-        48.5% 10.8%,
-        54.8% 16.5%,
-        61.8% 22.6%,
-        68.5% 26.5%,
-        72.6% 25.4%,
-        77.5% 16.8%,
-        81.6% 16.4%,
-        84.4% 19.8%,
-        84.8% 28.6%,
-        82.6% 35.6%,
-        77.8% 39.8%,
-        73.4% 41.8%,
-        72.6% 48.2%,
-        75.2% 58.6%,
-        73.4% 67.2%,
-        68.2% 73.5%,
-        63.6% 77.2%,
-        62.2% 86.6%,
-        57.8% 90.8%,
-        49.4% 90.8%,
-        48.2% 78.6%,
-        43.2% 78.2%,
-        41.8% 90.8%,
-        33.8% 90.8%,
-        29.4% 86.4%,
-        28.4% 77.4%,
-        23.4% 73.2%,
-        19.2% 66.4%,
-        17.6% 57.4%,
-        19.8% 48.6%,
-        19.4% 42.4%,
-        14.4% 39.4%,
-        10.6% 34.4%,
-        9.8% 26.6%,
-        12.2% 19.2%,
-        15.8% 16.2%,
-        19.2% 16.6%,
-        23.8% 25.2%,
-        27.8% 26.2%
+  <script src="https://cdn.tailwindcss.com"></script>
+      width: 55%;
+      height: 260%;
+      transform: rotate(18deg);
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
       );
-      pointer-events: none;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shine 7s linear infinite;
     }
 
-    .water-fill {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
+    .logo-progress {
+      --fill-level: 0%;
+    }
+
+    .logo-water {
       height: var(--fill-level);
       background:
-        linear-gradient(
-          180deg,
-          rgba(223, 247, 255, 0.72) 0%,
-          rgba(143, 230, 255, 0.78) 20%,
-          rgba(42, 196, 238, 0.84) 52%,
-          rgba(16, 165, 232, 0.9) 76%,
-          rgba(7, 61, 92, 0.96) 100%
-        );
-      opacity: 0.94;
-      transition: height 0.08s linear;
-      will-change: height;
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.45), transparent 22%),
+        linear-gradient(180deg, rgba(125, 211, 252, 0.85) 0%, rgba(14, 165, 233, 0.88) 45%, rgba(8, 47, 73, 0.92) 100%);
+      transition: height 0.18s linear;
     }
 
-    .water-fill::before {
+    .logo-wave {
+      position: absolute;
+      top: -16px;
+      left: -6%;
+      width: 112%;
+      height: 28px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.38);
+      filter: blur(1px);
+      animation: wave 4.5s ease-in-out infinite;
+    }
+
+    .logo-water::after {
       content: "";
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(circle at 26% 18%, rgba(255, 255, 255, 0.22), transparent 18%),
-        radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.16), transparent 14%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 42%);
-      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 45%);
     }
 
-    .water-fill::after {
-      content: "";
-      position: absolute;
-      top: 12%;
-      right: 14%;
-      width: 24%;
-      height: 18%;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.12);
-      filter: blur(18px);
-      pointer-events: none;
-    }
-
-    .water-wave {
-      position: absolute;
-      left: -8%;
-      width: 116%;
-      border-radius: 999px;
-      pointer-events: none;
-      will-change: transform;
-    }
-
-    .water-wave--back {
-      top: -18px;
-      height: 26px;
-      background: rgba(214, 244, 255, 0.64);
-      filter: blur(2px);
-      animation: wave-back 7.4s ease-in-out infinite;
-    }
-
-    .water-wave--front {
-      top: -10px;
-      height: 18px;
-      background: rgba(255, 255, 255, 0.52);
-      animation: wave-front 4.4s ease-in-out infinite;
-    }
-
-    .mascot-image {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      pointer-events: none;
-      user-select: none;
-      -webkit-user-drag: none;
-    }
-
-    .mascot-image--base {
-      opacity: 0.16;
-      filter: grayscale(1) brightness(1.08);
-    }
-
-    .mascot-image--overlay {
-      z-index: 3;
+    .logo-watermark {
       mix-blend-mode: multiply;
-      opacity: 0.98;
+      opacity: 0.85;
+      filter: saturate(1.08);
     }
 
-    .section {
-      padding: 80px 0;
+    @keyframes shine {
+      from {
+        transform: translateX(-30%) rotate(18deg);
+      }
     }
 
-    .section--muted {
-      background: rgba(241, 245, 249, 0.62);
-      border-top: 1px solid rgba(226, 232, 240, 0.7);
-      border-bottom: 1px solid rgba(226, 232, 240, 0.7);
-    }
-
-    .section__eyebrow {
-      display: inline-block;
-      margin-bottom: 14px;
-      color: var(--blue-600);
-      font-size: 0.8rem;
-      font-weight: 800;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-    }
-
-    .section__title {
-      margin: 0;
-      font-size: clamp(2rem, 3vw, 3.2rem);
-      line-height: 1.06;
-      letter-spacing: -0.04em;
-      text-wrap: balance;
-    }
-
-    .section__text {
-      max-width: 62ch;
-      margin: 16px 0 0;
-      color: var(--text-2);
-      line-height: 1.85;
-    }
-
-    .card-grid,
-    .reviews-grid,
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px;
-      align-items: start;
-    }
-
-    .card {
-      padding: 30px;
-      border-radius: var(--radius-xl);
-      background: rgba(255, 255, 255, 0.88);
-      border: 1px solid rgba(226, 232, 240, 0.9);
-      box-shadow: var(--shadow-card);
-    }
-
-    .card h3 {
-      margin: 0 0 12px;
-      font-size: 1.2rem;
-    }
-
-    .card p {
-      margin: 0;
-      color: var(--text-2);
-      line-height: 1.8;
-    }
-
-    .benefits-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 22px;
-      margin-top: 32px;
-    }
-
-    .benefit-number {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      margin-bottom: 16px;
-      border-radius: 16px;
-      background: var(--blue-50);
-      color: var(--blue-700);
-      font-weight: 900;
-    }
-
-    .media-card {
-      min-height: 320px;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 249, 255, 0.96));
-    }
-
-    .media-card strong {
-      display: block;
-      margin-bottom: 10px;
-      font-size: 1.25rem;
-      color: var(--text-1);
-    }
-
-    .field {
-      display: block;
-      margin-bottom: 16px;
-    }
-
-    .field span {
-      display: block;
-      margin-bottom: 8px;
-      color: var(--text-2);
-      font-weight: 700;
-    }
-
-    .input,
-    .textarea {
-      width: 100%;
-      border: 1px solid rgba(203, 213, 225, 0.92);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.98);
-      color: var(--text-1);
-      padding: 14px 16px;
-      transition: border-color 0.24s ease, box-shadow 0.24s ease;
-    }
-
-    .textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
-
-    .input:focus,
-    .textarea:focus {
-      outline: none;
-      border-color: rgba(16, 165, 232, 0.72);
-      box-shadow: 0 0 0 4px rgba(143, 230, 255, 0.2);
-    }
-
-    .feedback {
-      display: none;
-      margin: 0 0 16px;
-      padding: 12px 14px;
-      border-radius: 16px;
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-
-    .feedback.is-visible {
-      display: block;
-    }
-
-    .feedback.is-error {
-      background: #fef2f2;
-      color: #b91c1c;
-    }
-
-    .feedback.is-success {
-      background: #ecfdf5;
-      color: #047857;
-    }
-
-    .review-list {
-      display: grid;
-      gap: 14px;
-    }
-
-    .review {
-      padding: 18px;
-      border-radius: 18px;
-      border: 1px solid rgba(226, 232, 240, 0.9);
-      background: rgba(255, 255, 255, 0.94);
-    }
-
-    .review strong {
-      display: block;
-      margin-bottom: 8px;
-      color: var(--text-1);
-    }
-
-    .review p {
-      margin: 0;
-      color: var(--text-2);
-      line-height: 1.75;
-    }
-
-    .review--empty {
-      text-align: center;
-      color: var(--text-3);
-      border-style: dashed;
-    }
-
-    .contact-card {
-      background: linear-gradient(135deg, var(--blue-700), var(--blue-900));
-      color: var(--white);
-    }
-
-    .contact-card p {
-      color: rgba(255, 255, 255, 0.84);
-    }
-
-    .contact-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 52px;
-      margin-top: 20px;
-      padding: 0 20px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.96);
-      color: var(--blue-700);
-      font-weight: 800;
-      box-shadow: 0 12px 26px rgba(255, 255, 255, 0.14);
-      transition: transform 0.28s ease, box-shadow 0.28s ease;
-    }
-
-    .contact-link:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 34px rgba(255, 255, 255, 0.2);
-    }
-
-    .site-footer {
-      padding: 28px 0 36px;
-      text-align: center;
-      color: var(--text-3);
-    }
-
-    @keyframes wave-back {
+    @keyframes wave {
       0%, 100% {
-        transform: translateX(-2%) scaleY(1);
+        transform: translateX(-2%);
       }
       50% {
-        transform: translateX(2%) scaleY(1.08);
+        transform: translateX(2%);
       }
     }
 
-    @keyframes wave-front {
-      0%, 100% {
-        transform: translateX(2%) scaleY(1);
-      }
-      50% {
-        transform: translateX(-2%) scaleY(0.94);
-      }
+    .float-soft {
+      animation: float-soft 5.5s ease-in-out infinite;
     }
 
-    @keyframes mascot-float {
-      0%, 100% {
-        transform: translateY(0px);
-      }
-      50% {
-        transform: translateY(-8px);
-      }
-    }
-
-    @media (max-width: 980px) {
-      .hero {
-        min-height: auto;
-      }
-
-      .hero__grid,
-      .card-grid,
-      .reviews-grid,
-      .contact-grid,
-      .benefits-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero__content {
-        max-width: none;
-      }
-
-      .hero__visual {
-        order: 2;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .site-header__inner {
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        padding: 14px 0;
-      }
-
-      .nav {
-        gap: 0.9rem 1rem;
-        font-size: 0.95rem;
-      }
-
-      .hero,
-      .section {
-        padding: 64px 0;
-      }
-
-      .hero__grid {
-        gap: 34px;
-      }
-
-      .hero__metrics {
-        grid-template-columns: 1fr;
-      }
-
-      .card,
-      .mascot-card {
-        padding: 22px;
-      }
+    .hero-grid {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 34px 34px;
     }
   </style>
-</head>
-<body>
-  <header class="site-header">
-    <div class="container site-header__inner">
-      <a href="#inicio" class="brand">Água Limpa</a>
+<body class="text-slate-800 selection:bg-cyan-200 selection:text-slate-900">
+  <nav class="fixed inset-x-0 top-0 z-50">
+    <div class="mx-auto mt-4 flex max-w-6xl items-center justify-between rounded-full border border-white/40 px-4 py-3 shadow-lg glass sm:px-6">
+      <a href="#inicio" class="text-lg font-black tracking-wide text-cyan-700">Agua Limpa</a>
+      <a href="#inicio" class="text-lg font-black tracking-wide text-cyan-700">Água Limpa</a>
 
-      <nav class="nav" aria-label="Navegação principal">
-        <a href="#sobre">Sobre</a>
-        <a href="#beneficios">Benefícios</a>
-        <a href="#avaliacoes">Avaliações</a>
-        <a href="#contato">Contato</a>
-      </nav>
+      <div class="hidden items-center gap-5 text-sm font-medium text-slate-700 md:flex">
+        <a href="#sobre" class="transition hover:text-cyan-600">Sobre</a>
+        <a href="#tutorial" class="transition hover:text-cyan-600">Tutorial</a>
+        <a href="#saude" class="transition hover:text-cyan-600">Beneficios</a>
+        <a href="#avaliacoes" class="transition hover:text-cyan-600">Avaliacoes</a>
+        <a href="#saude" class="transition hover:text-cyan-600">Benefícios</a>
+        <a href="#avaliacoes" class="transition hover:text-cyan-600">Avaliações</a>
+        <a href="#contato" class="transition hover:text-cyan-600">Contato</a>
+      </div>
     </div>
-  </header>
-
-  <main>
-    <section class="hero" id="inicio">
-      <div class="container hero__grid">
-        <div class="hero__content">
-          <span class="eyebrow">Projeto Social</span>
-          <h1 class="hero__title">Água limpa muda vidas todos os dias.</h1>
-          <p class="hero__text">
-            Um projeto de conscientização sobre saúde, prevenção de doenças e qualidade de vida
-            por meio do acesso à água potável.
+            Projeto social e educacional
+          </span>
+          <h1 class="max-w-xl text-4xl font-black leading-tight sm:text-5xl md:text-6xl">
+            Agua limpa muda vidas todos os dias
+            Água limpa muda vidas todos os dias
+          </h1>
+          <p class="mt-5 max-w-xl text-base leading-7 text-blue-50 sm:text-lg">
+            Um projeto de conscientizacao sobre saude, prevencao de doencas e qualidade de vida por meio do acesso a agua limpa.
+            Um projeto de conscientização sobre saúde, prevenção de doenças e qualidade de vida por meio do acesso à água limpa.
           </p>
-
-          <div class="hero__actions">
-            <a href="#sobre" class="button button--primary">Conhecer o projeto</a>
-            <a href="#contato" class="button button--secondary">Fale conosco</a>
-          </div>
-
-          <div class="hero__metrics">
-            <div class="metric-card">
-              <strong id="contador">1</strong>
-              <span>Visitantes registrados</span>
-            </div>
-
-            <div class="metric-card">
-              <strong>Mais saúde</strong>
-              <span>Informação, cuidado e bem-estar para a comunidade.</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="hero__visual">
-          <div class="mascot-card">
-            <div class="mascot-stage" aria-label="Mascote do projeto Água Limpa">
-              <img
-                src="./mascote-vazio.png"
-                alt=""
-                class="mascot-image mascot-image--base"
-                aria-hidden="true"
-              >
-
-              <div class="mascot-fill-area" aria-hidden="true">
-                <div class="water-fill">
-                  <div class="water-wave water-wave--back"></div>
-                  <div class="water-wave water-wave--front"></div>
-                </div>
+          <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+            <a
+          <div class="rounded-[2rem] border border-white/20 bg-white/10 p-5 shadow-2xl backdrop-blur-md">
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div class="rounded-3xl bg-white/90 p-5 text-slate-800 shadow-lg">
+                <p class="text-sm font-semibold text-cyan-700">Impacto</p>
+                <p class="mt-3 text-3xl font-black" id="contador">0</p>
+                <p class="mt-2 text-sm text-slate-600">visitas registradas neste navegador</p>
+                <p class="text-sm font-semibold text-cyan-700">Visitantes</p>
+                <p class="mt-3 text-3xl font-black" id="contador">1</p>
+                <p class="mt-2 text-sm text-slate-600" id="contadorDescricao">
+                  contagem estimada por dispositivo neste navegador
+                </p>
               </div>
+              <div class="rounded-3xl bg-cyan-300/20 p-5 shadow-lg">
+                <p class="text-sm font-semibold text-cyan-100">Foco</p>
+                <p class="mt-3 text-2xl font-bold">Saude, educacao e prevencao</p>
+                <p class="mt-2 text-sm text-cyan-50">Informacao acessivel para a comunidade.</p>
+                <p class="mt-3 text-2xl font-bold">Saúde, educação e prevenção</p>
+                <p class="mt-2 text-sm text-cyan-50">Informação acessível para a comunidade.</p>
+              </div>
+            </div>
 
-              <img
-                src="./mascote-vazio.png"
-                alt="Mascote do projeto Água Limpa"
-                class="mascot-image mascot-image--overlay"
-              >
+            <div class="mt-4 rounded-3xl bg-slate-950/20 p-5">
+              <p class="text-sm font-semibold text-cyan-100">Mensagem principal</p>
+              <p class="mt-3 text-lg leading-8 text-white/90">
+                Pequenas acoes de conscientizacao podem gerar grandes resultados na qualidade de vida de muitas pessoas.
+                Pequenas ações de conscientização podem gerar grandes resultados na qualidade de vida de muitas pessoas.
+              </p>
             </div>
           </div>
-        </div>
-      </div>
+      <div class="mx-auto max-w-6xl">
+        <div class="grid gap-4 sm:grid-cols-3">
+          <div class="rounded-3xl border border-cyan-100 bg-white/90 p-6 shadow-sm" data-aos="fade-up" data-aos-delay="0">
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-600">Conscientizacao</p>
+            <h2 class="mt-2 text-xl font-bold">Informacao clara</h2>
+            <p class="mt-3 text-sm leading-6 text-slate-600">Conteudo objetivo para mostrar a importancia da agua limpa no dia a dia.</p>
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-600">Conscientização</p>
+            <h2 class="mt-2 text-xl font-bold">Informação clara</h2>
+            <p class="mt-3 text-sm leading-6 text-slate-600">Conteúdo objetivo para mostrar a importância da água limpa no dia a dia.</p>
+          </div>
+          <div class="rounded-3xl border border-cyan-100 bg-white/90 p-6 shadow-sm" data-aos="fade-up" data-aos-delay="100">
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-600">Prevencao</p>
+            <h2 class="mt-2 text-xl font-bold">Mais saude</h2>
+            <p class="mt-3 text-sm leading-6 text-slate-600">Acesso a agua segura ajuda a evitar contaminacoes e doencas.</p>
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-600">Prevenção</p>
+            <h2 class="mt-2 text-xl font-bold">Mais saúde</h2>
+            <p class="mt-3 text-sm leading-6 text-slate-600">O acesso à água segura ajuda a evitar contaminações e doenças.</p>
+          </div>
+          <div class="rounded-3xl border border-cyan-100 bg-white/90 p-6 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-600">Qualidade de vida</p>
     </section>
 
-    <section class="section" id="sobre">
-      <div class="container card-grid">
-        <div class="card">
-          <span class="section__eyebrow">Sobre</span>
-          <h2 class="section__title">Conscientização com uma linguagem simples e acolhedora.</h2>
-          <p class="section__text">
-            O Projeto Água Limpa mostra como o acesso à água de qualidade influencia diretamente
-            a saúde, a higiene e a qualidade de vida das pessoas.
+    <section id="sobre" class="px-4 py-20">
+      <div class="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+      <div class="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1fr_1fr] md:items-center">
+        <div data-aos="fade-right" data-aos-duration="850">
+          <p class="text-sm font-bold uppercase tracking-[0.25em] text-cyan-600">Sobre o projeto</p>
+          <h2 class="mt-4 text-3xl font-black text-slate-900 sm:text-4xl">Uma iniciativa voltada para conscientizacao e cuidado coletivo</h2>
+          <h2 class="mt-4 text-3xl font-black text-slate-900 sm:text-4xl">Uma iniciativa voltada para conscientização e cuidado coletivo</h2>
+          <p class="mt-5 text-base leading-8 text-slate-600">
+            O Projeto Agua Limpa busca destacar como a agua potavel influencia diretamente a saude, a higiene e a qualidade de vida.
+            A proposta e compartilhar conhecimento de forma simples, visual e acolhedora.
+            O Projeto Água Limpa busca destacar como a água potável influencia diretamente a saúde, a higiene e a qualidade de vida.
+            A proposta é compartilhar conhecimento de forma simples, visual e acolhedora.
+          </p>
+          <p class="mt-4 text-base leading-8 text-slate-600">
+            Esta pagina foi pensada para apresentar o tema com uma navegacao leve, incentivando a reflexao e o engajamento com a causa.
+            Esta página foi pensada para apresentar o tema com navegação leve, incentivando a reflexão e o engajamento com a causa.
           </p>
         </div>
 
-        <div class="card">
-          <h3>Compromisso</h3>
-          <p>
-            Levar informação clara, despertar cuidado coletivo e reforçar a importância da água
-            como base para uma vida mais saudável.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--muted" id="beneficios">
-      <div class="container">
-        <span class="section__eyebrow">Benefícios</span>
-        <h2 class="section__title">Como a água limpa faz diferença no dia a dia.</h2>
-
-        <div class="benefits-grid">
-          <article class="card">
-            <span class="benefit-number">1</span>
-            <h3>Previne doenças</h3>
-            <p>Reduz o risco de contaminações e problemas causados por água imprópria para consumo.</p>
-          </article>
-
-          <article class="card">
-            <span class="benefit-number">2</span>
-            <h3>Melhora a qualidade de vida</h3>
-            <p>Contribui para higiene, segurança e bem-estar na rotina das famílias.</p>
-          </article>
-
-          <article class="card">
-            <span class="benefit-number">3</span>
-            <h3>Fortalece a comunidade</h3>
-            <p>Promove desenvolvimento social, dignidade e mais cuidado com a saúde coletiva.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="card media-card">
-          <div>
-            <strong>Vídeo em breve</strong>
-            <p>O espaço está pronto para receber o conteúdo principal do projeto.</p>
+          <div class="rounded-3xl bg-gradient-to-br from-cyan-600 to-sky-700 p-6 text-white shadow-xl">
+            <h3 class="text-xl font-bold">Por que isso importa?</h3>
+            <p class="mt-3 leading-7 text-cyan-50">
+              Agua limpa reduz riscos a saude, melhora a rotina das familias e fortalece o desenvolvimento da comunidade.
+              A água limpa reduz riscos à saúde, melhora a rotina das famílias e fortalece o desenvolvimento da comunidade.
+            </p>
+          </div>
+          <div class="rounded-3xl border border-cyan-100 bg-white p-6 shadow-sm">
+            <h3 class="text-xl font-bold text-slate-900">Objetivo</h3>
+            <p class="mt-3 leading-7 text-slate-600">
+              Mostrar que o acesso a agua de qualidade e um direito essencial e um fator decisivo para uma vida mais saudavel.
+              Mostrar que o acesso à água de qualidade é um direito essencial e um fator decisivo para uma vida mais saudável.
+            </p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section section--muted" id="avaliacoes">
-      <div class="container">
-        <span class="section__eyebrow">Avaliações</span>
-        <h2 class="section__title">Mensagens de quem passou por aqui.</h2>
+    <section class="px-4 pb-6">
+      <div class="mx-auto max-w-5xl" data-aos="zoom-in-up" data-aos-duration="850">
+        <div class="rounded-[2rem] border border-cyan-100 bg-white/90 p-6 shadow-xl sm:p-8">
+          <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p class="text-sm font-bold uppercase tracking-[0.25em] text-cyan-600">Identidade visual</p>
+              <h2 class="mt-3 text-3xl font-black text-slate-900 sm:text-4xl">Sua logo enche de água conforme a página desce</h2>
+            </div>
+            <p class="max-w-xl text-sm leading-6 text-slate-500">
+              O preenchimento vai subindo com o scroll e chega ao nível máximo quando a pessoa alcança o final do site.
+            </p>
+          </div>
 
-        <div class="reviews-grid" style="margin-top: 28px;">
-          <div class="card">
-            <form id="formAvaliacao" novalidate>
-              <label class="field">
-                <span>Seu nome</span>
-                <input
-                  type="text"
-                  id="nome"
-                  class="input"
-                  placeholder="Digite seu nome"
-                  required
+          <div class="logo-progress mx-auto max-w-2xl">
+            <div class="relative overflow-hidden rounded-[2rem] border border-cyan-100 bg-slate-50 shadow-inner">
+              <img
+                src="./logo-agua-limpa.png"
+                alt="Logo do projeto Água Limpa Vida Sustentável"
+                class="relative z-10 w-full object-contain"
+              >
+
+              <div class="pointer-events-none absolute inset-x-0 bottom-0 z-20 overflow-hidden logo-water">
+                <div class="logo-wave"></div>
+                <img
+                  src="./logo-agua-limpa.png"
+                  alt=""
+                  aria-hidden="true"
+                  class="logo-watermark absolute bottom-0 left-0 w-full object-contain"
                 >
-              </label>
-
-              <label class="field">
-                <span>Seu comentário</span>
-                <textarea
-                  id="comentario"
-                  class="textarea"
-                  placeholder="Escreva sua opinião"
-                  required
-                ></textarea>
-              </label>
-
-              <div id="mensagemFormulario" class="feedback" aria-live="polite"></div>
-
-              <button type="submit" class="button button--primary" style="width: 100%;">
-                Enviar avaliação
-              </button>
-            </form>
+              </div>
+            </div>
           </div>
 
-          <div class="card">
-            <div id="listaAvaliacoes" class="review-list"></div>
+          <div class="mt-5 flex flex-col items-center justify-between gap-3 rounded-3xl bg-cyan-50 px-5 py-4 text-center text-cyan-900 sm:flex-row sm:text-left">
+            <p class="text-sm leading-6">
+              Nível de água da logo baseado no progresso da rolagem da página.
+            </p>
+            <p class="text-lg font-black" id="scrollPercentual">0%</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="contato">
-      <div class="container contact-grid">
-        <div class="card contact-card">
-          <span class="section__eyebrow" style="color: rgba(255,255,255,0.8);">Contato</span>
-          <h2 class="section__title">Fale com o projeto.</h2>
-          <p>
-            Entre em contato para conversar sobre a iniciativa e compartilhar ideias.
+    <section id="tutorial" class="bg-white/80 px-4 py-20">
+      <div class="mx-auto max-w-6xl" data-aos="zoom-in-up" data-aos-duration="850">
+        <div class="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-sm font-bold uppercase tracking-[0.25em] text-cyan-600">Tutorial</p>
+            <h2 class="mt-3 text-3xl font-black text-slate-900 sm:text-4xl">Espaco reservado para o seu video</h2>
+            <h2 class="mt-3 text-3xl font-black text-slate-900 sm:text-4xl">Espaço reservado para o seu vídeo</h2>
+          </div>
+          <p class="max-w-xl text-sm leading-6 text-slate-500">
+            Enquanto o video ainda nao foi definido, deixei um bloco elegante com aviso para voce trocar depois sem quebrar o layout.
+            Enquanto o vídeo ainda não foi definido, deixei um bloco elegante com aviso para você trocar depois sem quebrar o layout.
           </p>
-          <a href="mailto:pedro.pereira1@aedb.br" class="contact-link">
-            pedro.pereira1@aedb.br
-          </a>
         </div>
 
-        <div class="card">
-          <h3>Água limpa, saúde e futuro</h3>
-          <p>
-            Pequenas ações de conscientização ajudam a construir comunidades mais fortes,
-            saudáveis e preparadas para o amanhã.
-          </p>
+            <iframe
+              class="h-full w-full"
+              src=""
+              title="Espaco reservado para video"
+              title="Espaço reservado para vídeo"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+        </div>
+
+        <div class="mt-5 rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-800">
+          Quando receber o link do video, basta trocar o atributo <code>src</code> do <code>iframe</code> em
+          Quando receber o link do vídeo, basta trocar o atributo <code>src</code> do <code>iframe</code> para
+          <code>https://www.youtube.com/embed/SEU_VIDEO</code>.
         </div>
       </div>
-    </section>
+    <section id="saude" class="px-4 py-20">
+      <div class="mx-auto max-w-6xl">
+        <div class="mb-10" data-aos="fade-up" data-aos-duration="800">
+          <p class="text-sm font-bold uppercase tracking-[0.25em] text-cyan-600">Beneficios</p>
+          <h2 class="mt-3 text-3xl font-black text-slate-900 sm:text-4xl">Como a agua limpa melhora a saude</h2>
+          <p class="text-sm font-bold uppercase tracking-[0.25em] text-cyan-600">Benefícios</p>
+          <h2 class="mt-3 text-3xl font-black text-slate-900 sm:text-4xl">Como a água limpa melhora a saúde</h2>
+        </div>
+
+        <div class="grid gap-5 md:grid-cols-3">
+          <article class="rounded-3xl border border-cyan-100 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="0">
+            <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-100 text-2xl text-cyan-700">1</div>
+            <h3 class="text-xl font-bold text-slate-900">Previne doencas</h3>
+            <p class="mt-3 leading-7 text-slate-600">Reduz o risco de contaminacoes e problemas causados por agua impropria para consumo.</p>
+            <h3 class="text-xl font-bold text-slate-900">Previne doenças</h3>
+            <p class="mt-3 leading-7 text-slate-600">Reduz o risco de contaminações e problemas causados por água imprópria para consumo.</p>
+          </article>
+          <article class="rounded-3xl border border-cyan-100 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="100">
+            <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-100 text-2xl text-cyan-700">2</div>
+            <h3 class="text-xl font-bold text-slate-900">Melhora a qualidade de vida</h3>
+            <p class="mt-3 leading-7 text-slate-600">Contribui para higiene adequada, bem-estar e mais seguranca na rotina das familias.</p>
+            <p class="mt-3 leading-7 text-slate-600">Contribui para higiene adequada, bem-estar e mais segurança na rotina das famílias.</p>
+          </article>
+          <article class="rounded-3xl border border-cyan-100 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="200">
+            <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-100 text-2xl text-cyan-700">3</div>
+            <h3 class="text-xl font-bold text-slate-900">Promove bem-estar</h3>
+            <p class="mt-3 leading-7 text-slate-600">Um recurso essencial que apoia o desenvolvimento social e a saude coletiva.</p>
+            <p class="mt-3 leading-7 text-slate-600">Um recurso essencial que apoia o desenvolvimento social e a saúde coletiva.</p>
+          </article>
+        </div>
+      </div>
+    <section id="avaliacoes" class="bg-slate-100/80 px-4 py-20">
+      <div class="mx-auto max-w-4xl">
+        <div class="mb-8" data-aos="fade-up" data-aos-duration="800">
+          <p class="text-sm font-bold uppercase tracking-[0.25em] text-cyan-600">Avaliacoes</p>
+          <h2 class="mt-3 text-3xl font-black text-slate-900 sm:text-4xl">Comentarios de visitantes</h2>
+          <p class="mt-3 text-slate-600">Os comentarios ficam salvos no navegador para nao sumirem quando a pagina for atualizada.</p>
+          <p class="text-sm font-bold uppercase tracking-[0.25em] text-cyan-600">Avaliações</p>
+          <h2 class="mt-3 text-3xl font-black text-slate-900 sm:text-4xl">Comentários de visitantes</h2>
+          <p class="mt-3 text-slate-600">Os comentários ficam salvos no navegador para não sumirem quando a página for atualizada.</p>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-[0.95fr_1.05fr]">
+              required
+            >
+
+            <label for="comentario" class="mb-2 mt-4 block text-sm font-semibold text-slate-700">Seu comentario</label>
+            <label for="comentario" class="mb-2 mt-4 block text-sm font-semibold text-slate-700">Seu comentário</label>
+            <textarea
+              id="comentario"
+              rows="5"
+              placeholder="Escreva sua opiniao"
+              placeholder="Escreva sua opinião"
+              class="w-full rounded-2xl border border-slate-200 p-3 outline-none transition focus:border-cyan-500 focus:ring-4 focus:ring-cyan-100"
+              required
+            ></textarea>
+            <p id="mensagemFormulario" class="mt-3 hidden rounded-2xl px-4 py-3 text-sm"></p>
+
+            <button class="mt-5 w-full rounded-full bg-cyan-600 px-5 py-3 font-semibold text-white transition duration-300 hover:-translate-y-1 hover:bg-cyan-700">
+              Enviar avaliacao
+              Enviar avaliação
+            </button>
+          </form>
+
+        <p class="text-sm font-bold uppercase tracking-[0.3em] text-cyan-100">Contato</p>
+        <h2 class="mt-4 text-3xl font-black sm:text-4xl">Fale conosco</h2>
+        <p class="mx-auto mt-4 max-w-2xl text-base leading-7 text-blue-50">
+          Para mais informacoes sobre o projeto, entre em contato pelo e-mail abaixo.
+          Para mais informações sobre o projeto, entre em contato pelo e-mail abaixo.
+        </p>
+        <a
+          href="mailto:pedro.pereira1@aedb.br"
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      © 2026 Projeto Água Limpa. Todos os direitos reservados.
-    </div>
+  <footer class="border-t border-white/40 bg-slate-950 px-4 py-5 text-center text-sm text-slate-300">
+    © 2026 Projeto Agua Limpa. Todos os direitos reservados.
+    © 2026 Projeto Água Limpa. Todos os direitos reservados.
   </footer>
 
   <script>
-    const root = document.documentElement;
+    });
+
     const contador = document.getElementById("contador");
+    const contadorDescricao = document.getElementById("contadorDescricao");
     const form = document.getElementById("formAvaliacao");
-    const listaAvaliacoes = document.getElementById("listaAvaliacoes");
+    const lista = document.getElementById("listaAvaliacoes");
     const mensagemFormulario = document.getElementById("mensagemFormulario");
+    const logoProgress = document.querySelector(".logo-progress");
+    const scrollPercentual = document.getElementById("scrollPercentual");
 
-    let maxScroll = 1;
-    let currentFill = 0;
-    let targetFill = 0;
-    let animationFrameId = 0;
+    function configurarContagemDeVisitante() {
+      const chaveContador = "contadorDispositivosAguaLimpa";
+      const chavePrimeiraVisita = "dispositivoRegistradoAguaLimpa";
 
-    function configurarContador() {
-      const contadorKey = "contadorDispositivosAguaLimpa";
-      const dispositivoKey = "dispositivoRegistradoAguaLimpa";
-      let visitas = Number(localStorage.getItem(contadorKey)) || 0;
+      let visitas = Number(localStorage.getItem(chaveContador)) || 0;
+      const dispositivoJaRegistrado = localStorage.getItem(chavePrimeiraVisita) === "true";
 
-      if (localStorage.getItem(dispositivoKey) !== "true") {
+      if (!dispositivoJaRegistrado) {
         visitas += 1;
-        localStorage.setItem(contadorKey, String(visitas));
-        localStorage.setItem(dispositivoKey, "true");
+        localStorage.setItem(chaveContador, String(visitas));
+        localStorage.setItem(chavePrimeiraVisita, "true");
+        contadorDescricao.textContent = "primeiro acesso registrado neste navegador";
+      } else {
+        contadorDescricao.textContent = "este navegador já foi contabilizado";
       }
 
-      contador.textContent = String(visitas);
+    let visitas = Number(localStorage.getItem("visitas")) || 0;
+    visitas += 1;
+    localStorage.setItem("visitas", String(visitas));
+    contador.textContent = visitas;
+      contador.textContent = visitas;
     }
 
-    function atualizarMaxScroll() {
-      maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-      targetFill = Math.min(window.scrollY / maxScroll, 1);
-      iniciarAnimacao();
-    }
+    function atualizarPreenchimentoDaLogo() {
+      const alturaRolavel = document.documentElement.scrollHeight - window.innerHeight;
+      const progresso = alturaRolavel > 0 ? Math.min(window.scrollY / alturaRolavel, 1) : 0;
+      const percentual = Math.round(progresso * 100);
 
-    function aplicarPreenchimento(valor) {
-      const percentual = Math.max(0, Math.min(100, valor * 100));
-      root.style.setProperty("--fill-level", percentual.toFixed(2) + "%");
-    }
-
-    function iniciarAnimacao() {
-      if (animationFrameId) {
-        return;
-      }
-
-      const animar = () => {
-        const diferenca = targetFill - currentFill;
-        currentFill += diferenca * 0.085;
-
-        if (Math.abs(diferenca) < 0.00045) {
-          currentFill = targetFill;
-        }
-
-        aplicarPreenchimento(currentFill);
-
-        if (Math.abs(targetFill - currentFill) > 0.00045) {
-          animationFrameId = window.requestAnimationFrame(animar);
-        } else {
-          animationFrameId = 0;
-        }
-      };
-
-      animationFrameId = window.requestAnimationFrame(animar);
-    }
-
-    function atualizarTargetPeloScroll() {
-      targetFill = Math.min(window.scrollY / maxScroll, 1);
-      iniciarAnimacao();
-    }
-
-    function mostrarMensagem(texto, tipo) {
-      mensagemFormulario.textContent = texto;
-      mensagemFormulario.className = "feedback is-visible";
-      mensagemFormulario.classList.add(tipo === "erro" ? "is-error" : "is-success");
-    }
-
-    function renderizarVazio() {
-      const item = document.createElement("div");
-      item.className = "review review--empty";
-      item.textContent = "Nenhuma avaliação ainda. Seja a primeira pessoa a compartilhar.";
-      listaAvaliacoes.appendChild(item);
+      logoProgress.style.setProperty("--fill-level", percentual + "%");
+      scrollPercentual.textContent = percentual + "%";
     }
 
     function carregarAvaliacoes() {
-      const dados = JSON.parse(localStorage.getItem("avaliacoesAguaLimpa")) || [];
-      listaAvaliacoes.innerHTML = "";
-
-      if (dados.length === 0) {
-        renderizarVazio();
+      const avaliacoesSalvas = JSON.parse(localStorage.getItem("avaliacoes")) || [];
+      lista.innerHTML = "";
+      if (avaliacoesSalvas.length === 0) {
+        const aviso = document.createElement("div");
+        aviso.className = "rounded-3xl border border-dashed border-slate-300 bg-white/70 p-6 text-slate-500";
+        aviso.textContent = "Ainda nao ha avaliacoes. Seja a primeira pessoa a comentar.";
+        aviso.textContent = "Ainda não há avaliações. Seja a primeira pessoa a comentar.";
+        lista.appendChild(aviso);
         return;
       }
-
-      dados.forEach((item) => {
-        const review = document.createElement("article");
-        review.className = "review";
-
-        const nome = document.createElement("strong");
-        nome.textContent = item.nome;
-
-        const comentario = document.createElement("p");
-        comentario.textContent = item.comentario;
-
-        review.appendChild(nome);
-        review.appendChild(comentario);
-        listaAvaliacoes.appendChild(review);
-      });
-    }
-
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      const nome = document.getElementById("nome").value.trim();
-      const comentario = document.getElementById("comentario").value.trim();
+      const comentario = comentarioInput.value.trim();
 
       if (!nome || !comentario) {
+        mostrarMensagem("Preencha seu nome e comentario antes de enviar.", "erro");
         mostrarMensagem("Preencha seu nome e comentário antes de enviar.", "erro");
         return;
       }
 
-      
+      localStorage.setItem("avaliacoes", JSON.stringify(avaliacoesSalvas));
+
+      carregarAvaliacoes();
+      mostrarMensagem("Avaliacao enviada com sucesso.", "sucesso");
+      mostrarMensagem("Avaliação enviada com sucesso.", "sucesso");
+      form.reset();
+    });
+
+    window.addEventListener("scroll", atualizarPreenchimentoDaLogo, { passive: true });
+    window.addEventListener("resize", atualizarPreenchimentoDaLogo);
+
+    configurarContagemDeVisitante();
+    carregarAvaliacoes();
+    atualizarPreenchimentoDaLogo();
+  </script>
+</body>
+</html>
