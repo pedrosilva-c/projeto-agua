@@ -1177,43 +1177,6 @@
     }
     if (waterRect && wavePath) requestAnimationFrame(waveLoop);
 
-    // ─── Counter (Firebase ou localStorage, 1 por dispositivo) ───
-    const contadorEl = document.getElementById('contador');
-    const VISIT_REG = 'agua-limpa-dispositivo-registrado';
-
-    async function initCounter() {
-      const jaRegistrado = localStorage.getItem(VISIT_REG);
-      if (USE_FIREBASE) {
-        try {
-          // Lê contador atual
-          const res = await fetch(FIREBASE_URL + '/visitas.json');
-          let count = (await res.json()) || 0;
-          // Só incrementa se dispositivo ainda não foi contado
-          if (!jaRegistrado) {
-            count++;
-            await fetch(FIREBASE_URL + '/visitas.json', {
-              method: 'PUT',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(count)
-            });
-            localStorage.setItem(VISIT_REG, 'true');
-          }
-          // Anima o número
-          animateCount(contadorEl, count, '', 1200);
-          return;
-        } catch(e) {}
-      }
-      // Fallback localStorage
-      let v = parseInt(localStorage.getItem('visitas-agua-limpa') || '0');
-      if (!jaRegistrado) {
-        v++;
-        localStorage.setItem('visitas-agua-limpa', String(v));
-        localStorage.setItem(VISIT_REG, 'true');
-      }
-      animateCount(contadorEl, v, '', 1200);
-    }
-    initCounter();
-
     // ─── Animated Stats ──────────────────────────────────────────
     function animateCount(el, target, suffix, duration) {
       const start = performance.now();
@@ -1374,6 +1337,58 @@
 
     loadReviews();
 
+    // ─── COUNTER FINAL FUNCIONANDO ─────────────────────────
+const contadorEl = document.getElementById('contador');
+const VISIT_REG = 'agua-limpa-dispositivo-registrado';
+
+async function initCounter() {
+  try {
+    if (USE_FIREBASE) {
+
+      // registra visita (1 por dispositivo)
+      if (!localStorage.getItem(VISIT_REG)) {
+        await fetch(FIREBASE_URL + '/visitas.json', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            timestamp: Date.now()
+          })
+        });
+
+        localStorage.setItem(VISIT_REG, 'true');
+      }
+
+      // busca visitas
+      const res = await fetch(FIREBASE_URL + '/visitas.json');
+      const data = await res.json();
+
+      // conta visitas corretamente
+      const total = (data && typeof data === 'object')
+        ? Object.keys(data).length
+        : 0;
+
+      animateCount(contadorEl, Math.max(total, 1), '', 1200);
+      return;
+    }
+
+  } catch (e) {
+    console.error('Erro no contador:', e);
+  }
+
+  // fallback local
+  let v = parseInt(localStorage.getItem('visitas-agua-limpa') || '0');
+
+  if (!localStorage.getItem(VISIT_REG)) {
+    v++;
+    localStorage.setItem('visitas-agua-limpa', String(v));
+    localStorage.setItem(VISIT_REG, 'true');
+  }
+
+  animateCount(contadorEl, Math.max(v, 1), '', 1200);
+}
+
+initCounter();
+    
     // ─── Back to top ─────────────────────────────────────────────
     const backToTop = document.getElementById('back-to-top');
     window.addEventListener('scroll', () => {
