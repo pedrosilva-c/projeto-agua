@@ -1177,33 +1177,40 @@
     }
     if (waterRect && wavePath) requestAnimationFrame(waveLoop);
 
-    // ─── Counter (shared, 1 per device via localStorage flag) ──
+    // ─── Counter (Firebase ou localStorage, 1 por dispositivo) ───
     const contadorEl = document.getElementById('contador');
-    const VISIT_KEY = 'agua-limpa-visitas-v1';
     const VISIT_REG = 'agua-limpa-dispositivo-registrado';
 
     async function initCounter() {
-      try {
-        // Read current shared count
-        let count = 0;
+      const jaRegistrado = localStorage.getItem(VISIT_REG);
+      if (USE_FIREBASE) {
         try {
-          const res = await window.storage.get(VISIT_KEY, true);
-          count = res ? (parseInt(res.value) || 0) : 0;
-        } catch(_) {}
-
-        // Only increment if this device hasn't been counted before
-        const jaRegistrado = localStorage.getItem(VISIT_REG);
-        if (!jaRegistrado) {
-          count++;
-          localStorage.setItem(VISIT_REG, 'true');
-          try { await window.storage.set(VISIT_KEY, String(count), true); } catch(_) {}
-        }
-
-        contadorEl.textContent = count;
-      } catch(e) {
-        // Fallback: just show 1
-        contadorEl.textContent = '1';
+          // Lê contador atual
+          const res = await fetch(FIREBASE_URL + '/visitas.json');
+          let count = (await res.json()) || 0;
+          // Só incrementa se dispositivo ainda não foi contado
+          if (!jaRegistrado) {
+            count++;
+            await fetch(FIREBASE_URL + '/visitas.json', {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(count)
+            });
+            localStorage.setItem(VISIT_REG, 'true');
+          }
+          // Anima o número
+          animateCount(contadorEl, count, '', 1200);
+          return;
+        } catch(e) {}
       }
+      // Fallback localStorage
+      let v = parseInt(localStorage.getItem('visitas-agua-limpa') || '0');
+      if (!jaRegistrado) {
+        v++;
+        localStorage.setItem('visitas-agua-limpa', String(v));
+        localStorage.setItem(VISIT_REG, 'true');
+      }
+      animateCount(contadorEl, v, '', 1200);
     }
     initCounter();
 
@@ -1267,8 +1274,12 @@
       });
     });
 
-    // ─── Reviews (shared via Anthropic storage API) ──────────────
-    const STORAGE_KEY = 'agua-limpa-avaliacoes-v1';
+    // ─── Reviews via Firebase Realtime DB (gratuito, sem auth) ────
+    // INSTRUÇÃO: crie um projeto gratuito em https://firebase.google.com
+    // Vá em Realtime Database > Criar > modo teste > copie a URL e cole abaixo
+    const FIREBASE_URL = 'https://projeto-agua-limpa-default-rtdb.firebaseio.com'
+    const USE_FIREBASE = FIREBASE_URL !== 'COLE_SUA_URL_FIREBASE_AQUI';
+
     const form = document.getElementById('formAvaliacao');
     const lista = document.getElementById('listaAvaliacoes');
     const msg = document.getElementById('mensagemFormulario');
@@ -1293,25 +1304,37 @@
       dados.forEach(item => {
         const art = document.createElement('article');
         art.className = 'review';
-        const stars = document.createElement('div');
+        const meta = document.createElement('div');
+        meta.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:4px;';
+        const stars = document.createElement('span');
         stars.className = 'review-stars';
         stars.textContent = starsHtml(item.estrelas || 5);
+        const data = document.createElement('span');
+        data.style.cssText = 'font-size:0.78rem;color:var(--text-3);';
+        data.textContent = item.data || '';
+        meta.appendChild(stars); meta.appendChild(data);
         const n = document.createElement('strong'); n.textContent = item.nome;
         const p = document.createElement('p'); p.textContent = item.comentario;
-        art.appendChild(stars); art.appendChild(n); art.appendChild(p);
+        art.appendChild(meta); art.appendChild(n); art.appendChild(p);
         lista.appendChild(art);
       });
     }
 
+    // Lê do Firebase ou localStorage como fallback
     async function loadReviews() {
       lista.innerHTML = '<div class="review review--empty">Carregando avaliações…</div>';
-      try {
-        const result = await window.storage.get(STORAGE_KEY, true);
-        const dados = result ? JSON.parse(result.value) : [];
-        renderReviews(dados);
-      } catch(e) {
-        renderReviews([]);
+      if (USE_FIREBASE) {
+        try {
+          const res = await fetch(FIREBASE_URL + '/avaliacoes.json');
+          const raw = await res.json();
+          const dados = raw ? Object.values(raw).reverse() : [];
+          renderReviews(dados);
+          return;
+        } catch(e) {}
       }
+      // Fallback: localStorage
+      const dados = JSON.parse(localStorage.getItem('avaliacoes-agua-limpa') || '[]');
+      renderReviews(dados);
     }
 
     form.addEventListener('submit', async e => {
@@ -1323,18 +1346,24 @@
       const submitBtn = form.querySelector('button[type="submit"]');
       submitBtn.disabled = true;
       submitBtn.textContent = 'Enviando…';
+      const novaAvaliacao = { nome, comentario, estrelas: selectedStars, data: new Date().toLocaleDateString('pt-BR') };
       try {
-        let dados = [];
-        try {
-          const result = await window.storage.get(STORAGE_KEY, true);
-          dados = result ? JSON.parse(result.value) : [];
-        } catch(_) {}
-        dados.unshift({ nome, comentario, estrelas: selectedStars, data: new Date().toLocaleDateString('pt-BR') });
-        await window.storage.set(STORAGE_KEY, JSON.stringify(dados), true);
+        if (USE_FIREBASE) {
+          await fetch(FIREBASE_URL + '/avaliacoes.json', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(novaAvaliacao)
+          });
+        } else {
+          // Fallback: localStorage
+          const dados = JSON.parse(localStorage.getItem('avaliacoes-agua-limpa') || '[]');
+          dados.unshift(novaAvaliacao);
+          localStorage.setItem('avaliacoes-agua-limpa', JSON.stringify(dados));
+        }
         form.reset();
         selectedStars = 0;
         starBtns.forEach(b => b.classList.remove('active'));
-        renderReviews(dados);
+        await loadReviews();
         showMsg('Avaliação enviada com sucesso! Obrigado.', 'sucesso');
       } catch(err) {
         showMsg('Erro ao salvar. Tente novamente.', 'erro');
